@@ -1,4 +1,9 @@
 MeetingSpot::Application.routes.draw do
+
+  resources :maps do
+    resources :addresses
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
