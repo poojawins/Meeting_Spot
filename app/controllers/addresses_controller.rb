@@ -9,8 +9,10 @@ class AddressesController < ApplicationController
 
   def create
     @address = Address.new(params[:address])
+    @map = params[:map_id]
     if @address.save 
-      redirect_to @address
+      redirect_to map_address_path
+      # redirect_to "/maps/#{@map}/addresses/#{@address.id}"
     else
       render new
     end
