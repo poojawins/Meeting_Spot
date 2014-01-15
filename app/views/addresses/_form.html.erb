@@ -1,4 +1,4 @@
-<%= form_for @address do |f| %>
+<%= form_for "address" do |f| %>
 	<% if @address.errors.any? %>
 		<div id="error_explanation"> 
 			<h2> <%= pluralize(@address.errors.count, "error") %> </h2> 
@@ -9,5 +9,13 @@
 			</ul>
 		</div>
 	<% end %>
-
+	<div class="field">
+		<%= f.label :name, 'Name' %>
+		<%= f.text_field :name %>
+		<%= f.label :place, 'Address' %>
+		<%= f.text_field :place %>
+	</div>
+	<div class="actions">
+		<%= f.submit %>
+	</div>
 <% end %>
