@@ -10,7 +10,7 @@ class Map < ActiveRecord::Base
   end
 
   def map_title
-    self.name.length == 0 ? "This is your map" : self.name
+    self.name.length == 0 ? "Your Map" : self.name
   end
 
 end
