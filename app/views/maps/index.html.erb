@@ -13,7 +13,7 @@
       <td><%= map.name %></td>
       <td></td>
       <td><%= link_to 'Show', map %></td>
-      <td><%= link_to 'Edit', map_edit_path(map) %></td>
+      <td><%= link_to 'Edit', edit_map_path(map) %></td>
       <td><%= link_to 'Delete', map, {:method => 'delete', :data => {:confirm => 'Are you sure you want to delete? You\'ll be destroying a world :('}} %></td>
     </tr>
   <% end %>
