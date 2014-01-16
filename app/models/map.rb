@@ -9,4 +9,8 @@ class Map < ActiveRecord::Base
     self.middle_ground_long = coords[1]
   end
 
+  def map_title
+    self.name.nil? ? "This is your map" : self.name
+  end
+
 end
