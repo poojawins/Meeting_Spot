@@ -1,0 +1,23 @@
+<%= form_for @map do |f| %>
+  <% if @map.errors.any? %>
+    <div id="error_explanation"> 
+      <h2> <%= pluralize(@map.errors.count, "error") %> </h2> 
+      <ul>
+        <% @map.errors.full_messages.each do |message| %>
+        <li> <%= message %> </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :name, 'Name' %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :city, 'What city are you meeting in?' %>
+    <%= f.text_field :city %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

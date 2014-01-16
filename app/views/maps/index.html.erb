@@ -1,0 +1,23 @@
+<h1>All The Maps</h1>
+<table>
+  <tr>
+    <th>Map Name</th>
+    <th>Map Initiator</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  
+  <% @maps.each do |map| %>
+    <tr>
+      <td><%= map.name %></td>
+      <td></td>
+      <td><%= link_to 'Show', map %></td>
+      <td><%= link_to 'Edit', map_edit_path(map) %></td>
+      <td><%= link_to 'Delete', map, {:method => 'delete', :data => {:confirm => 'Are you sure you want to delete? You\'ll be destroying a world :('}} %></td>
+    </tr>
+  <% end %>
+
+</table>
+
+<%= link_to 'Create a new map', new_map_path %>
