@@ -13,9 +13,9 @@ class MapsController < ApplicationController
   end
 
   def create
-    middle_ground_lat = Geocoder.coordinates(params[:map][:city])[0]
-    middle_ground_long = Geocoder.coordinates(params[:map][:city])[1]
-    @map = Map.new(:name => params[:map][:name], :middle_ground_lat => middle_ground_lat, :middle_ground_long => middle_ground_long)
+    @map = Map.new(params[:map])
+    @map.coords(params[:map][:city])
+
     if @map.save
       redirect_to @map
     else
