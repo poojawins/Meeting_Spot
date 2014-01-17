@@ -1,0 +1,11 @@
+<%= form_for @map, :url => @map do |f| %>
+  <%= f.fields_for :addresses, @map.addresses.build do |ff| %>
+    <div>
+      <%= ff.label :name %>
+      <%= ff.text_field :name %>
+      <%= ff.label :place, "Location:" %>
+      <%= ff.text_field :place %>
+      <%= ff.submit %>
+    </div>
+  <% end %>
+<% end %>

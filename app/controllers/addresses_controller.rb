@@ -4,18 +4,23 @@ class AddressesController < ApplicationController
   end
 
   def new
-    @address = Address.new
+    # @map = Map.find(params[:id])
+    # @address = Address.
+    # @map.add
   end
 
   def create
-    @address = Address.new(params[:address])
-    @map = params[:map_id]
-    if @address.save 
-      # redirect_to map_address_path
-      redirect_to "/maps/#{@map}/addresses/#{@address.id}"
-    else
-      render new
-    end
+    @map = Map.find(params[:id])
+    @address = @map.addresses.build(params[:address_attributes][0])
+
+    # @address = Address.new(params[:address])
+    # @map = params[:id]
+    # if @address.save 
+    #   # redirect_to map_address_path
+    #   redirect_to "/maps/#{@map}/addresses/#{@address.id}"
+    # else
+    #   render new
+    # end
   end
 
   def show

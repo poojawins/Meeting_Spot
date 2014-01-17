@@ -3,6 +3,8 @@ class Map < ActiveRecord::Base
   attr_accessor :city
   attr_accessible :name, :middle_ground_lat, :middle_ground_long, :city
 
+  accepts_nested_attributes_for :addresses
+
   def coords(city)
     coords = Geocoder.coordinates(city)
     self.middle_ground_lat = coords[0]
