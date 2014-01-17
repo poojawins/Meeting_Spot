@@ -9,5 +9,16 @@
 
 <div id="googleMap" style="width:800px;height:380px;"></div>
 <%= render "address_form" %>
+
+<div class="address_list">
+  <ul>
+    <%= @map.addresses.each do |address| %>
+      <%# break if address.exists? %>
+      <li><%= address.name %>: <%= address.place %></li>
+    <% end %>
+  </ul>
+</div>
+
+
 <br>
 <%= link_to "Back to all maps", maps_path %>
