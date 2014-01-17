@@ -19,7 +19,7 @@ class AddressesController < ApplicationController
     # @map = params[:id]
      # if @address.save 
     #   # redirect_to map_address_path
-    # redirect_to "/maps/#{@map.id}"
+     redirect_to "/maps/#{@map.id}"
       # redirect_to "/maps/#{@map}/addresses/#{@address.id}"
     # else
     #   render new
