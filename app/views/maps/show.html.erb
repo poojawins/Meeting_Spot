@@ -12,8 +12,8 @@
 
 <div class="address_list">
   <ul>
-    <%= @map.addresses.each do |address| %>
-      <%# break if address.exists? %>
+    <% @map.addresses.each do |address| %>
+      <% next if address.id.nil? %>
       <li><%= address.name %>: <%= address.place %></li>
     <% end %>
   </ul>

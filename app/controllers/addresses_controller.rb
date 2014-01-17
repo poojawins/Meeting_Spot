@@ -11,7 +11,7 @@ class AddressesController < ApplicationController
 
   def create
     @map = Map.find(params[:map_id])
-    @address = Address.new(params[:map][:addresses_attributes]["0"])
+    @address = Address.create(params[:map][:addresses_attributes]["0"])
     @map.addresses << @address
 
 
