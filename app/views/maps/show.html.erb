@@ -4,10 +4,7 @@
   var lat = <%=  @map.middle_ground_lat %>;
   var lon = <%= @map.middle_ground_long %>;
 
-  
-
   google.maps.event.addDomListener(window, "load", initialize);
-
 
   google.maps.event.addDomListener(window, "load",addMarker);
 
@@ -24,7 +21,6 @@
     <% end %>
   </ul>
 </div>
-
 
 <br>
 <%= link_to "Back to all maps", maps_path %>
