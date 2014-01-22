@@ -4,9 +4,20 @@
   var lat = <%=  @map.middle_ground_lat %>;
   var lon = <%= @map.middle_ground_long %>;
 
+  function addAllMarkers(){  
+    <% @map.addresses.each do |address| %>
+      var lat = <%= address.latitude %>;
+      var lon = <%= address.longitude %>;
+      var newMark = new google.maps.Marker({
+        position: new google.maps.LatLng(lat,lon), 
+        map:map
+      }); 
+    <% end %>
+  }
+
   google.maps.event.addDomListener(window, "load", initialize);
 
-  google.maps.event.addDomListener(window, "load",addMarker);
+  google.maps.event.addDomListener(window, "load",addAllMarkers);
 
 </script>
 
