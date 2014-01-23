@@ -46,6 +46,8 @@ class AddressesController < ApplicationController
 
   def destroy
     @address = Address.find(params[:id]).delete
+    @map = Map.find(params[:map_id])
+    redirect_to @map
   end
 
 
