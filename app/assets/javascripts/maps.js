@@ -2,6 +2,7 @@ var map;
 var directionsService;
 var markerArray = [];
 var directionResults;
+var calculate = document.getElementById("btn");
 
 function initialize(){
   directionsService = new google.maps.DirectionsService();
@@ -42,6 +43,8 @@ function calcRoute(startLoc, endLoc){
       // warnings.innerHTML = " " + response.routes[0].warnings + " ";
       // directionsDisplay.setDirections(response); showSteps(response);
     }
+    return directionResults;
   });
+  return directionResults;
 }
 
