@@ -27,7 +27,7 @@ function calcRoute(startLoc, endLoc){
     markerArray[i].setMap(null);
   }
 
-  var request {
+  var request = {
     origin: startLoc,
     destination: endLoc,
     travelMode: google.maps.TravelMode.TRANSIT,
@@ -38,9 +38,10 @@ function calcRoute(startLoc, endLoc){
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       directionResults = response;
-    //   var warnings = document.getElementById("warnings_panel") 
-    //   warnings.innerHTML = " " + response.routes[0].warnings + " ";
-    //   directionsDisplay.setDirections(response); showSteps(response);
+      // var warnings = document.getElementById("warnings_panel") 
+      // warnings.innerHTML = " " + response.routes[0].warnings + " ";
+      // directionsDisplay.setDirections(response); showSteps(response);
     }
   });
 }
+
