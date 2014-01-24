@@ -58,3 +58,13 @@ function midWay(){
 function findDuration(){
   return directionResults.routes[0].legs[0].duration.text;
 }
+
+function findLongestRoute(addresses){
+  var longest;
+  for (start = 0; start < addresses.length - 1; start ++){
+    for (end = start + 1; end < addresses.length; end++){
+      var directions = calcRoute(startLoc, endLoc);
+    }
+  }
+  return longest;
+}
