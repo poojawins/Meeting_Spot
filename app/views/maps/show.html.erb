@@ -29,12 +29,17 @@
   
   var start = new google.maps.LatLng(<%= @map.addresses[0].latitude %>, <%= @map.addresses[0].longitude %>);
   var end = new google.maps.LatLng(<%= @map.addresses[1].latitude %>, <%= @map.addresses[1].longitude %>);
-  
-  google.maps.event.addListener(calculate, "click", function() {
-    calcRoute(start, end);
-  });
+
+  window.onload = function () {
+    var calcBtn = document.getElementById("btn");
+    
+    calcBtn.addEventListener("click", function() {
+      calcRoute(start, end);
+    });
+  }
 
 </script>
+  
 
 <div id="googleMap" style="width:800px;height:380px;"></div>
 <%= render "address_form" %>
@@ -48,7 +53,7 @@
   </ul>
 </div>
 
-<a id="btn" href="#">Calculate Route</a>
+<button id="btn">Calculate Route</button>
 
 <br>
 <%= link_to "Back to all maps", maps_path %>
