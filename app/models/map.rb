@@ -17,4 +17,9 @@ class Map < ActiveRecord::Base
     self.name.length == 0 ? "Your Map" : self.name
   end
 
+  def addresses_to_json
+    a = self.addresses
+    a.to_json(:only => [:latitude, :longitude])
+  end
+
 end
