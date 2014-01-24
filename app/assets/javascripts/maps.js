@@ -52,5 +52,9 @@ function midWay(){
   var midPoint = Math.floor(directionResults.routes[0].overview_path.length / 2);
   var midLat = directionResults.routes[0].overview_path[midPoint].d;
   var midLong = directionResults.routes[0].overview_path[midPoint].e;
+  return [midLat, midLong];
 }
 
+function findDuration(){
+  return directionResults.routes[0].legs[0].duration.text;
+}
