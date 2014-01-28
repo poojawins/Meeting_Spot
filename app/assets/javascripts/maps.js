@@ -61,9 +61,9 @@ function findDuration(directions){
 
 function findLongestRoute(addresses){
   var longest = 0;
-  for (start = 0; start < addresses.length - 1; start++){
-    for (end = start + 1; end < addresses.length; end++){
-      var directionResults = calcRoute(startLoc, endLoc);
+  for (var start = 0; start < addresses.length - 1; start++){
+    for (var end = start + 1; end < addresses.length; end++){
+      var directionResults = calcRoute(addresses[start], addresses[end]);
       if(longest == 0 || findDuration(directionResults) > findDuration(longest)){
         longest = directionResults;
       } 
