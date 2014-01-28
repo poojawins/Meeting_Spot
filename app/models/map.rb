@@ -22,4 +22,12 @@ class Map < ActiveRecord::Base
     a.to_json(:only => [:latitude, :longitude])
   end
 
+  def address_array
+    addy_array = []
+    self.addresses.each do |address|
+      addy_array << [address.latitude, address.longitude]
+    end
+    addy_array
+  end
+
 end
