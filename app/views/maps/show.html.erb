@@ -4,6 +4,7 @@
   var lat = <%=  @map.middle_ground_lat %>;
   var lon = <%= @map.middle_ground_long %>;
   var bounds = new google.maps.LatLngBounds();
+  var addressArray = convertToLatLonObjects(<%= @map.address_array %>);
 
   function addAllMarkers(){  
     <% @map.addresses.each do |address| %>

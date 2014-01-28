@@ -68,3 +68,12 @@ function findLongestRoute(addresses){
   }
   return longest;
 }
+
+function convertToLatLonObjects(addressArray){
+  var newAddressObjects = [];
+  for(var i = 0; i < addressArray.length; i++){
+    var tempObject = new google.maps.LatLng(addressArray[i][0],addressArray[i][1]);
+    newAddressObjects.push(tempObject);
+  }
+  return newAddressObjects;
+}
