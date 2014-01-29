@@ -93,3 +93,18 @@ function convertToLatLonObjects(addressArray){
   }
   return newAddressObjects;
 }
+
+function findPlaces(){
+  var responses;
+
+  var request = {
+    location: new google.maps.LatLng(midpoint[0],midpoint[1]),
+    radius: '500',
+    types: ['bar']
+  };
+
+  var service = new google.maps.places.PlacesService(map);
+  service.nearbySearch(request, function(results, status){ 
+    responses = results; //responses holds an array of places objects 
+  });
+}

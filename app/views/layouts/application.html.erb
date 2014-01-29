@@ -5,7 +5,7 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-  <script src="http://maps.googleapis.com/maps/api/js?key=<%= ENV["KEEFS_API_KEY"] %>&sensor=false"></script>
+  <script src="http://maps.googleapis.com/maps/api/js?key=<%= ENV["KEEFS_API_KEY"] %>&libraries=places&sensor=false"></script>
 </head>
 <body>
 <h1>Let us help you figure out where to meet!</h1>
