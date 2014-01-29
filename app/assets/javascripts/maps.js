@@ -2,6 +2,7 @@ var map;
 var directionsService;
 var routeArray = [];
 var calculate = document.getElementById("btn");
+var midpoint;
 
 function initialize(){
   directionsService = new google.maps.DirectionsService();
@@ -49,15 +50,15 @@ function calcRoute(startLoc, endLoc){
 
 function midWay(){
   var longestRoute = findLongestRoute();
-  var midPoint = Math.floor(longestRoute.routes[0].overview_path.length / 2);
-  var midLat = longestRoute.routes[0].overview_path[midPoint].d;
-  var midLong = longestRoute.routes[0].overview_path[midPoint].e;
+  var middleOfOverviewPath = Math.floor(longestRoute.routes[0].overview_path.length / 2);
+  var midLat = longestRoute.routes[0].overview_path[middleOfOverviewPath].d;
+  var midLong = longestRoute.routes[0].overview_path[middleOfOverviewPath].e;
   var newMark = new google.maps.Marker({
     animation: google.maps.Animation.DROP,
     position: new google.maps.LatLng(midLat, midLong),
     map:map
   });
-  console.log(newMark.position);
+  midpoint = [newMark.position.d, newMark.position.e];
 }
 
 function findDuration(directions){
