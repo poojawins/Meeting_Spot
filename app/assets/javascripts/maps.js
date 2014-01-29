@@ -59,33 +59,24 @@ function findDuration(directions){
 }
 
 function findRoutes(addresses){
-  var routes = [];
+  routeArray = [];
   for (var start = 0; start < addresses.length; start++){
     for (var end = start + 1; end < addresses.length; end++){
-      var ourDirectionResults = calcRoute(addresses[start], addresses[end]);
+      calcRoute(addresses[start], addresses[end]);
       // routes.push(ourDirectionResults);
-      console.log(start + " " + end);
     } 
   }
-  return routes;
 }
 
-
-// function findLongestRoute(addresses){
-//   var longest = 0;
-//   for (var start = 0; start < addresses.length; start++){
-//     for (var end = start + 1; end < addresses.length; end++){
-//       var directionResults;
-//       directionResults = calcRoute(addresses[start], addresses[end]);
-//       return directionResults;
-//       setTimeout(function(){console.log(start + " " + end);}, 75000);
-//       if(longest == 0 || findDuration(directionResults) > findDuration(longest)){
-//         longest = directionResults;
-//       } 
-//     }
-//   }
-//   return longest;
-// }
+function findLongestRoute(){
+  var longest = routeArray[0];
+  for (var i = 1; i < routeArray.length; i++){
+    if (findDuration(routeArray[i]) > findDuration(longest)){
+      longest = routeArray[i];
+    } 
+  }
+  return longest;
+}
 
 function convertToLatLonObjects(addressArray){
   var newAddressObjects = [];
