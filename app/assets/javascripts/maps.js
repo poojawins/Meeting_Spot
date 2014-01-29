@@ -95,16 +95,24 @@ function convertToLatLonObjects(addressArray){
 }
 
 function findPlaces(){
-  var responses;
+  var placesResponse;
 
   var request = {
     location: new google.maps.LatLng(midpoint[0],midpoint[1]),
-    radius: '500',
-    types: ['bar']
+    radius: '500', //meters
+    types: ['bar'] //https://developers.google.com/places/documentation/supported_types
   };
 
   var service = new google.maps.places.PlacesService(map);
+  // service.getDetails(request, callback); 
   service.nearbySearch(request, function(results, status){ 
-    responses = results; //responses holds an array of places objects 
+    placesResponse = results; //placesResponse holds an array of places objects 
   });
+
+  setTimeout(function(){
+    for(var i=0; i < placesResponse.length; i++){
+    console.log("name: " + placesResponse[i].name + " price: " + placesResponse[i].price_level + " rating: " + placesResponse[i].rating);
+  }}, 7500); 
+  //Needed the sleep to fully populate values of placesResponse before outputting
+  
 }
