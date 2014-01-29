@@ -38,8 +38,8 @@ function calcRoute(startLoc, endLoc){
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       var directionResults = response;
-      var warnings = document.getElementById("warnings_panel") 
-      warnings = " " + response.routes[0].warnings + " ";
+      // var warnings = document.getElementById("warnings_panel") 
+      // warnings = " " + response.routes[0].warnings + " ";
     } else {
       console.log("error: "+status);
     }
@@ -52,7 +52,12 @@ function midWay(){
   var midPoint = Math.floor(longestRoute.routes[0].overview_path.length / 2);
   var midLat = longestRoute.routes[0].overview_path[midPoint].d;
   var midLong = longestRoute.routes[0].overview_path[midPoint].e;
-  return [midLat, midLong];
+  var newMark = new google.maps.Marker({
+    animation: google.maps.Animation.DROP,
+    position: new google.maps.LatLng(midLat, midLong),
+    map:map
+  });
+  console.log(newMark.position);
 }
 
 function findDuration(directions){
