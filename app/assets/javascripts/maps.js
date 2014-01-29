@@ -1,7 +1,6 @@
 var map;
 var directionsService;
-var markerArray = [];
-var directionResults;
+var routeArray = [];
 var calculate = document.getElementById("btn");
 
 function initialize(){
@@ -24,28 +23,28 @@ function addMarker(){
 } 
 
 function calcRoute(startLoc, endLoc){
-  for (i = 0; i < markerArray.length; i++){
-    markerArray[i].setMap(null);
-  }
+  // for (i = 0; i < markerArray.length; i++){
+  //   markerArray[i].setMap(null);
+  // }
 
   var request = {
     origin: startLoc,
     destination: endLoc,
     travelMode: google.maps.TravelMode.TRANSIT,
     transitOptions:{
-      departureTime: new Date(2014,0,27)
+      departureTime: new Date()
     }   
   }
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
-      directionResults = response;
-      // var warnings = document.getElementById("warnings_panel") 
-      // warnings.innerHTML = " " + response.routes[0].warnings + " ";
-      // directionsDisplay.setDirections(response); showSteps(response);
+      var directionResults = response;
+      var warnings = document.getElementById("warnings_panel") 
+      warnings = " " + response.routes[0].warnings + " ";
+    } else {
+      console.log("error: "+status);
     }
-    return directionResults;
+    routeArray.push(directionResults);
   });
-  return directionResults;
 }
 
 function midWay(){
@@ -64,7 +63,7 @@ function findRoutes(addresses){
   for (var start = 0; start < addresses.length; start++){
     for (var end = start + 1; end < addresses.length; end++){
       var ourDirectionResults = calcRoute(addresses[start], addresses[end]);
-      routes.push(ourDirectionResults);
+      // routes.push(ourDirectionResults);
       console.log(start + " " + end);
     } 
   }
