@@ -110,9 +110,11 @@ function findPlaces(){
   });
 
   setTimeout(function(){
-    for(var i=0; i < placesResponse.length; i++){
-    console.log("type: " + placesResponse[i].types[0] + " name: " + placesResponse[i].name + " price: " + placesResponse[i].price_level + " rating: " + placesResponse[i].rating);
-  }}, 7500); 
+    var $ourPlacesList = $("#googlePlaces ul");
+    for(var i=0; i < 5; i++){
+      $("<li>" + "type: " + placesResponse[i].types[0] + " name: " + placesResponse[i].name + " price: " + placesResponse[i].price_level + " rating: " + placesResponse[i].rating + "</li>").appendTo($ourPlacesList);
+      console.log("type: " + placesResponse[i].types[0] + " name: " + placesResponse[i].name + " price: " + placesResponse[i].price_level + " rating: " + placesResponse[i].rating);
+    }}, 7500); 
   //Needed the sleep to fully populate values of placesResponse before outputting
   
 }
