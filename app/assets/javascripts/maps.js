@@ -100,7 +100,7 @@ function findPlaces(){
   var request = {
     location: new google.maps.LatLng(midpoint[0],midpoint[1]),
     radius: '500', //meters
-    types: ['bar'] //https://developers.google.com/places/documentation/supported_types
+    types: ['bar', 'cafe', 'restaurant'] //https://developers.google.com/places/documentation/supported_types
   };
 
   var service = new google.maps.places.PlacesService(map);
@@ -111,7 +111,7 @@ function findPlaces(){
 
   setTimeout(function(){
     for(var i=0; i < placesResponse.length; i++){
-    console.log("name: " + placesResponse[i].name + " price: " + placesResponse[i].price_level + " rating: " + placesResponse[i].rating);
+    console.log("type: " + placesResponse[i].types[0] + " name: " + placesResponse[i].name + " price: " + placesResponse[i].price_level + " rating: " + placesResponse[i].rating);
   }}, 7500); 
   //Needed the sleep to fully populate values of placesResponse before outputting
   
