@@ -1,5 +1,6 @@
 class Address < ActiveRecord::Base
 	attr_accessible :place, :name
+	validates :place, :presence => true
   belongs_to :map
   belongs_to :user
 	geocoded_by :place   # can also be an IP address

@@ -112,7 +112,7 @@ function findPlaces(){
   setTimeout(function(){
     var $ourPlacesList = $("#googlePlaces ul");
     for(var i=0; i < 5; i++){
-      $("<li>" + "type: " + placesResponse[i].types[0] + " name: " + placesResponse[i].name + " price: " + placesResponse[i].price_level + " rating: " + placesResponse[i].rating + "</li>").appendTo($ourPlacesList);
+      $("<li> Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").appendTo($ourPlacesList);
       console.log("type: " + placesResponse[i].types[0] + " name: " + placesResponse[i].name + " price: " + placesResponse[i].price_level + " rating: " + placesResponse[i].rating);
     }}, 2000); //Might need to adjust sleep duration according to number of returned results
   
