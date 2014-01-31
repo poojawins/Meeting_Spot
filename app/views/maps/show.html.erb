@@ -30,8 +30,11 @@
   
   google.maps.event.addDomListener(window, "load", function(){ findRoutes(addressArray);});
   window.onload = function () {
-    var calcBtn = document.getElementById("btn");
-    calcBtn.addEventListener("click", function() { midWay();});
+    var calcBtn = document.getElementById("place-btn");
+    calcBtn.addEventListener("click", function() {
+     midWay();
+     findPlaces();
+   });
   }
 
 </script>
@@ -51,7 +54,7 @@
   </ul>
 </div>
 
-<button id="btn">Calculate Route</button>
+<button id="place-btn">Find Meeting Place</button>
 
 <br>
 <%= link_to "Back to all maps", maps_path %>
