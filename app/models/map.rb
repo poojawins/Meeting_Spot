@@ -1,13 +1,16 @@
 class Map < ActiveRecord::Base
   attr_accessor :city
   attr_accessible :name, :middle_ground_lat, :middle_ground_long, :city
+  validates :city, :presence => true
   has_many :addresses
   has_many :users, :through => :addresses
-
 
   accepts_nested_attributes_for :addresses
 
   def coords(city)
+    if city == "" 
+      city = "New York, NY" #default to NY
+    end
     coords = Geocoder.coordinates(city)
     self.middle_ground_lat = coords[0]
     self.middle_ground_long = coords[1]

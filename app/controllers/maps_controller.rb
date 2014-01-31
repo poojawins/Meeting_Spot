@@ -15,7 +15,7 @@ class MapsController < ApplicationController
   def create
     @map = Map.new(params[:map])
     @map.coords(params[:map][:city])
-
+  
     if @map.save
       redirect_to @map
     else
