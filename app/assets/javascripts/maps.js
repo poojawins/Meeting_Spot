@@ -17,10 +17,11 @@ function initialize(){
   map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 }
 
-function addMarker(){
+function addMarker(latlong){
   var newMark = new google.maps.Marker({
-  	position: new google.maps.LatLng(lat,lon), 
-  	map:map
+  	position:latlong, 
+  	map:map,
+    icon:image
   });	
 } 
 
@@ -34,7 +35,7 @@ function calcRoute(startLoc, endLoc){
     destination: endLoc,
     travelMode: google.maps.TravelMode.TRANSIT,
     transitOptions:{
-      departureTime: new Date()
+      departureTime: new Date(2014, 1, 4, 13)
     }   
   }
   directionsService.route(request, function(response, status) {
@@ -54,13 +55,7 @@ function midWay(){
   var middleOfOverviewPath = Math.floor(longestRoute.routes[0].overview_path.length / 2);
   var midLat = longestRoute.routes[0].overview_path[middleOfOverviewPath].d;
   var midLong = longestRoute.routes[0].overview_path[middleOfOverviewPath].e;
-  var newMark = new google.maps.Marker({
-    animation: google.maps.Animation.DROP,
-    position: new google.maps.LatLng(midLat, midLong),
-    map:map,
-    icon:image
-  });
-  midpoint = [newMark.position.d, newMark.position.e];
+  midpoint = [midLat, midLong];
 }
 
 function findDuration(directions){
@@ -114,6 +109,7 @@ function findPlaces(){
   setTimeout(function(){
     var $ourPlacesList = $("#googlePlaces ul");
     for(var i=0; i < 5; i++){
+      addMarker(placesResponse[i].geometry.location);
       $("<li> Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").appendTo($ourPlacesList);
       console.log("type: " + placesResponse[i].types[0] + " name: " + placesResponse[i].name + " price: " + placesResponse[i].price_level + " rating: " + placesResponse[i].rating);
     }}, 2000); //Might need to adjust sleep duration according to number of returned results
