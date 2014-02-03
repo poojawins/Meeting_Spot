@@ -1,7 +1,6 @@
 class Map < ActiveRecord::Base
   attr_accessor :city
   attr_accessible :name, :middle_ground_lat, :middle_ground_long, :city
-  validates :city, :presence => true
   has_many :addresses
   has_many :users, :through => :addresses
 
