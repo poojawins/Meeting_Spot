@@ -40,6 +40,7 @@ class MapsController < ApplicationController
 
   def destroy
     @map = Map.delete(params[:id])
+    redirect_to maps_path
   end
 
 end
