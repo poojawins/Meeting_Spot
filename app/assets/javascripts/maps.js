@@ -3,6 +3,7 @@ var directionsService;
 var routeArray = [];
 var calculate = document.getElementById("btn");
 var midpoint;
+var image = "/assets/green_dot.png";
 
 function initialize(){
   directionsService = new google.maps.DirectionsService();
@@ -56,7 +57,8 @@ function midWay(){
   var newMark = new google.maps.Marker({
     animation: google.maps.Animation.DROP,
     position: new google.maps.LatLng(midLat, midLong),
-    map:map
+    map:map,
+    icon:image
   });
   midpoint = [newMark.position.d, newMark.position.e];
 }
