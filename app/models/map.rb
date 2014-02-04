@@ -3,7 +3,8 @@ class Map < ActiveRecord::Base
   attr_accessible :name, :middle_ground_lat, :middle_ground_long, :city
   has_many :addresses
   has_many :users, :through => :addresses
-
+  has_many :map_places
+  has_many :places, :through => :map_places
   accepts_nested_attributes_for :addresses
 
   def coords(city)
