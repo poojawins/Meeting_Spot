@@ -109,6 +109,7 @@ function findPlaces(){
 
   setTimeout(function(){
     var $ourPlacesList = $("#googlePlaces ul");
+    $ourPlacesList.find("li").remove();
     for(var i=0; i < 5; i++){
       addMarker(placesResponse[i].geometry.location);
       $("<li> Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").appendTo($ourPlacesList);
