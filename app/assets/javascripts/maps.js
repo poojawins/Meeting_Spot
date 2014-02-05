@@ -4,6 +4,7 @@ var routeArray = [];
 var calculate = document.getElementById("btn");
 var midpoint;
 var image = "/assets/green_dot.png";
+var placesResponse;
 
 function initialize(){
   directionsService = new google.maps.DirectionsService();
@@ -92,7 +93,7 @@ function convertToLatLonObjects(addressArray){
 }
 
 function findPlaces(){
-  var placesResponse;
+  //var placesResponse;
 
   var request = {
     location: new google.maps.LatLng(midpoint[0],midpoint[1]),
@@ -113,5 +114,5 @@ function findPlaces(){
       $("<li> Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").appendTo($ourPlacesList);
       console.log("type: " + placesResponse[i].types[0] + " name: " + placesResponse[i].name + " price: " + placesResponse[i].price_level + " rating: " + placesResponse[i].rating);
     }}, 2000); //Might need to adjust sleep duration according to number of returned results
-  
+    
 }
