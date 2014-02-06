@@ -6,6 +6,7 @@
   var bounds = new google.maps.LatLngBounds();
   var addressArray = convertToLatLonObjects(<%= @map.address_array %>);
   var markers = <%= raw @map.addresses_to_json %>;
+  var map_id = <%= @map.id %>;
 
   google.maps.event.addDomListener(window, "load", initialize);
   google.maps.event.addDomListener(window, "load", addAllMarkers);

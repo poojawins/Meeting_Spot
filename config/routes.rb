@@ -2,6 +2,10 @@ MeetingSpot::Application.routes.draw do
 
   resources :maps do
     resources :addresses
+    post '/places' => 'places#create'
+    get '/places/:id' => 'places#show'
+    get '/places' => 'places#selection'
+    put '/places/:id' => 'places#update'
   end
 
   # The priority is based upon order of creation:
