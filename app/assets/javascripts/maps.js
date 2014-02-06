@@ -126,6 +126,7 @@ function convertToLatLonObjects(addressArray){
 
 function findPlaces(midpoint){
   //var placesResponse;
+   var placesResponseObjs = [];
 
   var request = {
     location: new google.maps.LatLng(midpoint[0],midpoint[1]),
@@ -142,13 +143,20 @@ function findPlaces(midpoint){
   setTimeout(function(){
     var $ourPlacesList = $("#googlePlaces ul");
     $ourPlacesList.find("li").remove();
-    for(var i=0; i < 5; i++){
-      addMarker(placesResponse[i].geometry.location);
-      $("<li> Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").appendTo($ourPlacesList);
-      $.ajax('/maps/' + map_id + '/places', {
+   
+    for(var i=0; i < placesResponse.length; i++){
+      if(i < 5){
+        addMarker(placesResponse[i].geometry.location);
+        $("<li> Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").appendTo($ourPlacesList);
+      }
+      
+      placesResponseObjs.push({name: placesResponse[i].name, latitude: placesResponse[i].geometry.location.d, longitude:placesResponse[i].geometry.location.e, price_level:placesResponse[i].price_level, rating: placesResponse[i].rating, reference:placesResponse[i].reference, types: placesResponse[i].types.join(",")});      
+    }
+
+    $.ajax('/maps/' + map_id + '/places', {
               type: 'POST',
               dataType: 'json',
-              data: placesResponse});
-    }}, 2000); //Might need to adjust sleep duration according to number of returned results
+              data: {places:placesResponseObjs}});
+    }, 2000); //Might need to adjust sleep duration according to number of returned results
     
 }
