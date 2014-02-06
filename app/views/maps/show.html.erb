@@ -5,37 +5,16 @@
   var lon = <%= @map.middle_ground_long %>;
   var bounds = new google.maps.LatLngBounds();
   var addressArray = convertToLatLonObjects(<%= @map.address_array %>);
-
-  function addAllMarkers(){  
-    <% @map.addresses.each do |address| %>
-      var lat = <%= address.latitude %>;
-      var lon = <%= address.longitude %>;
-      var loc = new google.maps.LatLng(lat,lon);
-      var newMark = new google.maps.Marker({
-        position: loc, 
-        map:map
-      }); 
-      bounds.extend(loc);
-    <% end %>
-
-    if (bounds.isEmpty() == false){
-      map.fitBounds(bounds);
-      map.panToBounds(bounds);
-    }
-  }
+  var markers = <%= raw @map.addresses_to_json %>;
 
   google.maps.event.addDomListener(window, "load", initialize);
-
   google.maps.event.addDomListener(window, "load", addAllMarkers);
   
-  google.maps.event.addDomListener(window, "load", function(){ findRoutes(addressArray);});
-  window.onload = function () {
-    var calcBtn = document.getElementById("place-btn");
-    calcBtn.addEventListener("click", function() {
-      midWay();
-      findPlaces();
-   });
-  }
+  $(document).ready(function(){    
+    $("#place-btn").on("click", function(){
+      findRoutes(addressArray);
+    });
+  });
 
 </script>
   
