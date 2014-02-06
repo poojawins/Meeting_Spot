@@ -150,13 +150,22 @@ function findPlaces(midpoint){
         $("<li> Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").appendTo($ourPlacesList);
       }
       
-      placesResponseObjs.push({name: placesResponse[i].name, latitude: placesResponse[i].geometry.location.d, longitude:placesResponse[i].geometry.location.e, price_level:placesResponse[i].price_level, rating: placesResponse[i].rating, reference:placesResponse[i].reference, types: placesResponse[i].types.join(",")});      
+      placesResponseObjs.push({
+        name: placesResponse[i].name, 
+        latitude: placesResponse[i].geometry.location.d, 
+        longitude:placesResponse[i].geometry.location.e, 
+        price_level:placesResponse[i].price_level, 
+        rating: placesResponse[i].rating, 
+        reference:placesResponse[i].reference, 
+        types: placesResponse[i].types.join(",")
+      });      
     }
 
     $.ajax('/maps/' + map_id + '/places', {
-              type: 'POST',
-              dataType: 'json',
-              data: {places:placesResponseObjs}});
-    }, 2000); //Might need to adjust sleep duration according to number of returned results
+      type: 'POST',
+      dataType: 'json',
+      data: {places:placesResponseObjs}
+    });
+  }, 2000); //Might need to adjust sleep duration according to number of returned results
     
 }
