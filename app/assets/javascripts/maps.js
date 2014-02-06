@@ -147,7 +147,7 @@ function findPlaces(midpoint){
     for(var i=0; i < placesResponse.length; i++){
       if(i < 5){
         addMarker(placesResponse[i].geometry.location);
-        $("<li> Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").appendTo($ourPlacesList);
+        $("<li class='place'> Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").appendTo($ourPlacesList);
       }
       
       placesResponseObjs.push({
@@ -174,4 +174,17 @@ $(document).ready(function(){
   $("#place-btn").on("click", function(){
     findRoutes(addressArray);
   });
+
+  $(".place").on("click", function(){
+    $(this).addClass("highlight");
+    $(".place").not($(this)).removeClass("highlight");
+  });
 });
+
+   //1. check if full place info is in database
+    //2. if not in database, request info from google
+    //3. return full info (prettily)
+    //4. somehow change the marker on the map to make it noticable
+    //5. remove other notable markers
+    //6. highlight it in some way
+    //7. un-highlight the other items
