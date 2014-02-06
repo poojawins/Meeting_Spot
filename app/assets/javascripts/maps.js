@@ -175,11 +175,18 @@ $(document).ready(function(){
     findRoutes(addressArray);
   });
 
-  $(".place").on("click", function(){
-    $(this).addClass("highlight");
-    $(".place").not($(this)).removeClass("highlight");
-  });
 });
+
+//Not the ideal solution but here we're checking if the <li>s exist every 100 micro-seconds
+setInterval(function(){
+  if ($(".place").length) {
+    $(".place").on("click", function(){
+      $(this).addClass("highlight");
+      $(".place").not($(this)).removeClass("highlight");
+    });
+  }
+}, 100);
+
 
    //1. check if full place info is in database
     //2. if not in database, request info from google
