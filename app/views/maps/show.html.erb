@@ -7,18 +7,7 @@
   var addressArray = convertToLatLonObjects(<%= @map.address_array %>);
   var markers = <%= raw @map.addresses_to_json %>;
   var map_id = <%= @map.id %>;
-
-  google.maps.event.addDomListener(window, "load", initialize);
-  google.maps.event.addDomListener(window, "load", addAllMarkers);
-  
-  $(document).ready(function(){    
-    $("#place-btn").on("click", function(){
-      findRoutes(addressArray);
-    });
-  });
-
 </script>
-  
 
 <div id="googleMap" style="width:60%;height:380px; border:solid black 1px; display:inline-block;"></div>
 <div id="googlePlaces" style="width:35%;height:380px; border:solid black 1px; display:inline-block; margin:0 2%;"><ul></ul></div>
@@ -38,3 +27,8 @@
 
 <br>
 <%= link_to "Back to all maps", maps_path %>
+
+<script>
+  google.maps.event.addDomListener(window, "load", initialize);
+  google.maps.event.addDomListener(window, "load", addAllMarkers);
+</script>

@@ -169,3 +169,9 @@ function findPlaces(midpoint){
   }, 2000); //Might need to adjust sleep duration according to number of returned results
     
 }
+
+$(document).ready(function(){    
+  $("#place-btn").on("click", function(){
+    findRoutes(addressArray);
+  });
+});
