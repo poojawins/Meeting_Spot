@@ -12,6 +12,11 @@ class PlacesController < ApplicationController
 	end
 
 	def selection
+		@map = Map.find(params["map_id"])
+		@places = @map.places
+		respond_to do |format|
+  		format.js {render :json => @places}
+		end
 	end
 
 	def update

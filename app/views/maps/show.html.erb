@@ -7,6 +7,7 @@
   var addressArray = convertToLatLonObjects(<%= @map.address_array %>);
   var markers = <%= raw @map.addresses_to_json %>;
   var map_id = <%= @map.id %>;
+  var selectionPlaces  = <%= raw @map.places.to_json %>;
 </script>
 
 <div id="googleMap" style="width:60%;height:380px; border:solid black 1px; display:inline-block;"></div>
