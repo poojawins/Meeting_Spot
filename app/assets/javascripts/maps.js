@@ -218,8 +218,9 @@ $(document).ready(function(){
     }else{
       console.log("Pulling from Google");
       findRoutes(addressArray);
+      //Completely disable the button to prevent over query limit from Google. 
       setTimeout(function(){
-        $('#place-btn').prop('disabled', true);
+        $('#place-btn').prop('disabled', true); 
       },7000);
       $('#place-btn').prop('disabled', false);
     }
