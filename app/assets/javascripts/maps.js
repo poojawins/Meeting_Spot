@@ -4,6 +4,7 @@ var directionsService;
 var calculate = document.getElementById("btn");
 var image = "/assets/green_dot.png";
 var placesResponse;
+var placeTypes = [];
 
 function initialize(){
   directionsService = new google.maps.DirectionsService();
@@ -129,11 +130,12 @@ function convertToLatLonObjects(addressArray){
 function findPlaces(midpoint){
   //var placesResponse;
    var placesResponseObjs = [];
-
+  
+  console.log("Searching for " + placeTypes);
   var request = {
     location: new google.maps.LatLng(midpoint[0],midpoint[1]),
     radius: '500', //meters
-    types: ['bar', 'cafe', 'restaurant'] //https://developers.google.com/places/documentation/supported_types
+    types: placeTypes //https://developers.google.com/places/documentation/supported_types
   };
 
   var service = new google.maps.places.PlacesService(map);
@@ -181,8 +183,12 @@ function findPlaces(midpoint){
 }
 
 $(document).ready(function(){    
-  $("#place-btn").on("click", function(){
+  $("#place-btn").on("click", function(e){
     //If DB already don't find the routes again
+    
+    $('input[name=placeType]:checked').each(function(){
+        placeTypes.push($(this).val());
+    }); //Value of all checked for place types
 
     //AJAX request for selectionPlaces...working much better but won't work if button is clicked too fast after initial request 
     $.ajax('/maps/' + map_id + '/places', {
