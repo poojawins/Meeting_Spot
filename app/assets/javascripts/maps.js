@@ -100,10 +100,22 @@ function findRoutes(addresses){
   };
 
   for (var start = 0; start < addresses.length; start++){
-    for (var end = start + 1; end < addresses.length; end++){
-      routeCount ++;
-      calcRoute(addresses[start], addresses[end], callback);
-    } 
+    //setTimeout, loop with delay = 1 sec * add.length
+    duration = 3000;
+    setTimeout(
+      (function(s){
+        return function(){
+          console.log(s);
+        }
+      })(start), duration);
+    duration += 3000;
+
+
+    // for (var end = start + 1; end < addresses.length; end++){
+    //   //setTimeout, loop with delay = 1sec + 1sec
+    //   routeCount ++;
+    //   calcRoute(addresses[start], addresses[end], callback);
+    // } 
   }
 }
 
