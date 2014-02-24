@@ -42,6 +42,43 @@
   </fieldset>
 </form>
 
+<form class="dateForm">
+  <fieldset>
+    <legend>Pick date of Meeting</legend>
+    <p>
+      <input type="datetime-local" name="placeDate" id="placeDate-id"/>
+      <label for="placeDate">Time and Date of Meeting</label>
+    </p>
+  </fieldset>
+</form>
+
+<form class="placePriceForm">
+  <fieldset>
+    <legend>Pick Price point</legend>
+    <p>
+      <input type="radio" name="placePrice" id="price_1" value="0" checked />
+      <label for="pT_1">$</label>
+    </p>
+    <p>
+      <input type="radio" name="placePrice" id="price_1" value="1" checked />
+      <label for="pT_1">$$</label>
+    </p>
+    <p>
+      <input type="radio" name="placePrice" id="price_2" value="2" />
+      <label for="pT_2">$$$</label>
+    </p>
+    <p>
+      <input type="radio" name="placePrice" id="price_3" value="3" />
+      <label for="pT_3">$$$$</label>
+    </p>
+    <p>
+      <input type="radio" name="placePrice" id="price_3" value="4" />
+      <label for="pT_3">$$$$$</label>
+    </p>
+  </fieldset>
+</form>
+
+
 
 
 <button id="place-btn">Find Meeting Place</button>

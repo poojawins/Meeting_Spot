@@ -5,6 +5,8 @@ var calculate = document.getElementById("btn");
 var image = "/assets/green_dot.png";
 var placesResponse;
 var placeTypes = [];
+var meetingDate;
+var pricePoint;
 
 function initialize(){
   directionsService = new google.maps.DirectionsService();
@@ -54,7 +56,7 @@ function calcRoute(startLoc, endLoc, callback){
     destination: endLoc,
     travelMode: google.maps.TravelMode.TRANSIT,
     transitOptions:{
-      departureTime: new Date(2014, 1, 4, 13)
+      departureTime: new Date(meetingDate)
     }   
   }
   directionsService.route(request, function(response, status) {
@@ -131,11 +133,12 @@ function findPlaces(midpoint){
   //var placesResponse;
    var placesResponseObjs = [];
   
-  console.log("Searching for " + placeTypes);
+  console.log("Searching for " + placeTypes + " at a price point " + pricePoint);
   var request = {
     location: new google.maps.LatLng(midpoint[0],midpoint[1]),
     radius: '500', //meters
-    types: placeTypes //https://developers.google.com/places/documentation/supported_types
+    types: placeTypes, //https://developers.google.com/places/documentation/supported_types
+    maxPriceLevel: pricePoint
   };
 
   var service = new google.maps.places.PlacesService(map);
@@ -186,9 +189,13 @@ $(document).ready(function(){
   $("#place-btn").on("click", function(e){
     //If DB already don't find the routes again
     
+    pricePoint = $('input[name=placePrice]:radio:checked').val()
+
     $('input[name=placeType]:checked').each(function(){
         placeTypes.push($(this).val());
     }); //Value of all checked for place types
+
+    meetingDate = new Date($("#placeDate-id").val());
 
     //AJAX request for selectionPlaces...working much better but won't work if button is clicked too fast after initial request 
     $.ajax('/maps/' + map_id + '/places', {
