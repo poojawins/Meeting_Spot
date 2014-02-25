@@ -9,12 +9,13 @@
   var map_id = <%= @map.id %>;
   var selectionPlaces  = <%= raw @map.places.to_json %>;
 </script>
-
+<div id="wrapper">
 <div id="googleMap" style="width:60%;height:380px; border:solid black 1px; display:inline-block;"></div>
 <div id="googlePlaces" style="width:35%;height:380px; border:solid black 1px; display:inline-block; margin:0 2%;"><ul></ul></div>
-
+</div>
 <%= render "address_form" %>
 
+<br>
 <div class="address_list">
   <ul>
     <% @map.addresses.each do |address| %>
@@ -24,8 +25,10 @@
   </ul>
 </div>
 
+<br>
 <button id="place-btn">Find Meeting Place</button>
 
+<br>
 <br>
 <%= link_to "Back to all maps", maps_path %>
 

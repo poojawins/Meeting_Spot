@@ -2,8 +2,18 @@
 *, *:before, *:after {
   -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
  }
- 
+
+body {
+  background-color: lightblue;
+  padding-top: 60px;
+}
+
 ul
 {
-    list-style-type: none;
+  list-style-type: none;
+}
+
+#googleMaps, 
+#googlePlaces {
+  display: inline-block;
 }

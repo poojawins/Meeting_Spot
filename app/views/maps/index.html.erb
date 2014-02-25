@@ -1,15 +1,14 @@
-<h1>All The Maps</h1>
+<h1>Your Maps</h1>
 <table>
   <tr>
-    <th>Map Name</th>
-    <th>Map Initiator</th>
+    <th class="top">Map Name</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
   
   <% @maps.each do |map| %>
-    <tr>
+    <tr class="maplist">
       <td><%= map.name %></td>
       <td></td>
       <td><%= link_to 'Show', map %></td>
