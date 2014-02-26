@@ -36,22 +36,20 @@ function addAllMarkers(){
   }
 }
 
-function addMarker(latlong){
+function addMarker(place){
   var newMark = new google.maps.Marker({
-  	position:latlong, 
+  	position:place.geometry.location, 
   	map:map,
     icon:image,
     clickable:true
   });
-
   newMark.info = new google.maps.InfoWindow({
-    content:"HI"
-  });
+    content:"<p>" + place.name + "<br />" + "Rating: " + place.rating + "<br />" + "Price: " + place.price_level + "<br />" + place.formatted_address + "</p>"
 
+  });
   google.maps.event.addListener(newMark, 'click', function() {
     newMark.info.open(map, newMark);
   });
-
 } 
 
 function calcRoute(startLoc, endLoc, callback){
@@ -139,7 +137,7 @@ function convertToLatLonObjects(addressArray){
 
 function findPlaces(midpoint){
   //var placesResponse;
-   var placesResponseObjs = [];
+  placesResponseObjs = [];
 
   var request = {
     location: new google.maps.LatLng(midpoint[0],midpoint[1]),
@@ -159,7 +157,7 @@ function findPlaces(midpoint){
 
     for(var i=0; i < placesResponse.length; i++){
       if(i < 5){
-        addMarker(placesResponse[i].geometry.location);
+        addMarker(placesResponse[i]);
         $("<li class='place'> Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").appendTo($ourPlacesList);
       }
 
@@ -214,7 +212,7 @@ $(document).ready(function(){
     });
 
     
-    if(selectionPlaces.length){
+    if(selectionPlaces.length && false){
       var placesResponse = selectionPlaces; 
       console.log("Pulling from the DB");
       //This is just the same code from the findPlaces function. Definitely needs to be refactored
