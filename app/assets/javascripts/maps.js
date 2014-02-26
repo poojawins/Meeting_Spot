@@ -24,7 +24,8 @@ function addAllMarkers(){
     var loc = new google.maps.LatLng(lat,lon);
     var newMark = new google.maps.Marker({
       position: loc, 
-      map:map
+      map:map,
+      clickable:true
     }); 
     bounds.extend(loc);
   });
@@ -39,8 +40,18 @@ function addMarker(latlong){
   var newMark = new google.maps.Marker({
   	position:latlong, 
   	map:map,
-    icon:image
-  });	
+    icon:image,
+    clickable:true
+  });
+
+  newMark.info = new google.maps.InfoWindow({
+    content:"HI"
+  });
+
+  google.maps.event.addListener(newMark, 'click', function() {
+    newMark.info.open(map, newMark);
+  });
+
 } 
 
 function calcRoute(startLoc, endLoc, callback){
@@ -146,14 +157,12 @@ function findPlaces(midpoint){
     var $ourPlacesList = $("#googlePlaces ul");
     $ourPlacesList.find("li").remove();
 
-
-
     for(var i=0; i < placesResponse.length; i++){
       if(i < 5){
         addMarker(placesResponse[i].geometry.location);
         $("<li class='place'> Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").appendTo($ourPlacesList);
       }
-      
+
       placesResponseObjs.push({
         name: placesResponse[i].name, 
         latitude: placesResponse[i].geometry.location.d, 
