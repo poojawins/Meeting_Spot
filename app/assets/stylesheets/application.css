@@ -33,6 +33,10 @@ li {
   font-size: 20px;
 }
 
+li.places {
+  font-size: 18px;
+}
+
 #main {
   font-size: 35px;
   font-family: 'Lato', sans-serif;

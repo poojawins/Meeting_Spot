@@ -158,7 +158,7 @@ function findPlaces(midpoint){
     for(var i=0; i < placesResponse.length; i++){
       if(i < 5){
         addMarker(placesResponse[i]);
-        $("<li class='place'> Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").appendTo($ourPlacesList);
+        $("<li class='place'>" + "Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").appendTo($ourPlacesList);
       }
 
       placesResponseObjs.push({
@@ -244,7 +244,6 @@ setInterval(function(){
     });
   }
 }, 100);
-
 
    //1. check if full place info is in database
     //2. if not in database, request info from google

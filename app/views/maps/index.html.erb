@@ -9,7 +9,7 @@
   
   <% @maps.each do |map| %>
     <tr class="maplist">
-      <td><%= map.name %></td>
+      <td><%= map.name.titleize %></td>
       <td></td>
       <td><%= link_to 'Show', map %></td>
       <td><%= link_to 'Edit', edit_map_path(map) %></td>
