@@ -25,7 +25,6 @@ function addAllMarkers(){
     var newMark = new google.maps.Marker({
       position: loc, 
       map:map,
-      clickable:true
     }); 
     bounds.extend(loc);
   });
@@ -41,13 +40,12 @@ function addMarker(place){
   	position:place.geometry.location, 
   	map:map,
     icon:image,
-    clickable:true
   });
-  newMark.info = new google.maps.InfoWindow({
-    content:"<p>" + place.name + "<br />" + "Rating: " + place.rating + "<br />" + "Price: " + place.price_level + "<br />" + place.formatted_address + "</p>"
 
+  newMark.info = new google.maps.InfoWindow({
+    content:"<p>" + "<strong>" + place.name + "</strong>" + "<br />" + "Rating: " + place.rating + "<br />" + "Price: " + place.price_level + "<br />" + place.formatted_address + "</p>"
   });
-  google.maps.event.addListener(newMark, 'click', function() {
+  google.maps.event.addListener(newMark, 'mouseover', function() {
     newMark.info.open(map, newMark);
   });
 } 

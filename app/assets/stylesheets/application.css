@@ -33,7 +33,7 @@ li {
   font-size: 20px;
 }
 
-li.places {
+li.place {
   font-size: 18px;
 }
 
@@ -61,6 +61,10 @@ h1 {
   top: 0px;
   right: 0px;
   background-color: #5ec4cd;
+}
+
+.highlight{
+  color: red;
 }
 
 #wrapper {
