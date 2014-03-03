@@ -58,7 +58,6 @@ function calcRoute(startLoc, endLoc, callback){
       var directionResults = response;
       callback(directionResults);
     } else if(status == "OVER_QUERY_LIMIT") {
-      console.log("error: "+status);
       callback(status);
     } else {
       throw new Error(status);
@@ -87,9 +86,11 @@ function findRoutes(addresses){
   var callback = function (results){
     if (results == "OVER_QUERY_LIMIT"){
       setTimeout(function(){
+        console.log("retrying: "+results);
         calcRoute(locations[0], locations[1], callback);
       }, 2000);
     } else if (combinations.length > 0){
+      console.log("ok");
       routeArray.push(results);
       responseCount ++;
       combinations.shift();
