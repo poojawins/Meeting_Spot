@@ -194,8 +194,10 @@ $(document).ready(function(){
     $('input[name=placeType]:checked').each(function(){
         placeTypes.push($(this).val());
     }); //Value of all checked for place types
-
-    meetingDate = new Date($("#placeDate-id").val().replace('T', ' '));
+    
+    var dateTime = $("#placeDate-id").val().replace('T', ' ');
+    if (dateTime == "") meetingDate = new Date();
+    else meetingDate = new Date(dateTime);
 
     //AJAX request for selectionPlaces...working much better but won't work if button is clicked too fast after initial request 
     $.ajax('/maps/' + map_id + '/places', {
