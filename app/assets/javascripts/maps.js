@@ -45,7 +45,7 @@ function addMarker(place){
   newMark.info = new google.maps.InfoWindow({
     content:"<p>" + "<strong>" + place.name + "</strong>" + "<br />" + "Rating: " + place.rating + "<br />" + "Price: " + place.price_level + "<br />" + place.formatted_address + "</p>"
   });
-  google.maps.event.addListener(newMark, 'mouseover', function() {
+  google.maps.event.addListener(newMark, 'click', function() {
     newMark.info.open(map, newMark);
   }); 
   return newMark;
@@ -157,14 +157,16 @@ function findPlaces(midpoint){
     for(var i=0; i < placesResponse.length; i++){
       if(i < 5){
         (function(marker) {
-        $("<li class='place'>" + "Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").click(function(){
+        $("<li class='place'>" + "Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>"
+        ).click(function(){
           if( prev_selected ) {
             prev_selected.info.close();
             prev_selected.setIcon(image);
-          } prev_selected = marker; 
-            marker.setIcon("/assets/red_dot.png"); 
-            marker.info.open(map, marker);}).appendTo($ourPlacesList); 
-      })(addMarker(placesResponse[i]));
+          } 
+          prev_selected = marker; 
+          marker.setIcon("/assets/red_dot.png"); 
+          marker.info.open(map, marker);}).appendTo($ourPlacesList); 
+        })(addMarker(placesResponse[i]));
       }
 
       placesResponseObjs.push({
