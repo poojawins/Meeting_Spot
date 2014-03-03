@@ -133,7 +133,7 @@ function findPlaces(midpoint){
   //var placesResponse;
    var placesResponseObjs = [];
   
-  console.log("Searching for " + placeTypes + " at a price point " + pricePoint);
+  console.log("Searching for " + placeTypes + " at a price point " + pricePoint + " meeting date and time " + meetingDate);
   var request = {
     location: new google.maps.LatLng(midpoint[0],midpoint[1]),
     radius: '500', //meters
@@ -195,7 +195,7 @@ $(document).ready(function(){
         placeTypes.push($(this).val());
     }); //Value of all checked for place types
 
-    meetingDate = new Date($("#placeDate-id").val());
+    meetingDate = new Date($("#placeDate-id").val().replace('T', ' '));
 
     //AJAX request for selectionPlaces...working much better but won't work if button is clicked too fast after initial request 
     $.ajax('/maps/' + map_id + '/places', {
@@ -216,9 +216,8 @@ $(document).ready(function(){
     // function(data){
     //   selectionPlaces = $.parseJSON(data);   
     });
-
     
-    if(selectionPlaces.length){
+    if(selectionPlaces.length && false){
       var placesResponse = selectionPlaces; 
       console.log("Pulling from the DB");
       //This is just the same code from the findPlaces function. Definitely needs to be refactored
