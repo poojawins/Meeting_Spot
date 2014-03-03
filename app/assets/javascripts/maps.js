@@ -47,7 +47,8 @@ function addMarker(place){
   });
   google.maps.event.addListener(newMark, 'mouseover', function() {
     newMark.info.open(map, newMark);
-  });
+  }); 
+  return newMark;
 } 
 
 function calcRoute(startLoc, endLoc, callback){
@@ -155,8 +156,9 @@ function findPlaces(midpoint){
 
     for(var i=0; i < placesResponse.length; i++){
       if(i < 5){
-        addMarker(placesResponse[i]);
-        $("<li class='place'>" + "Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").appendTo($ourPlacesList);
+        (function(marker) {
+        $("<li class='place'>" + "Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").click(function(){marker.setIcon("/assets/red_dot.png");}).appendTo($ourPlacesList);
+      })(addMarker(placesResponse[i]));
       }
 
       placesResponseObjs.push({
