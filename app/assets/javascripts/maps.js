@@ -101,31 +101,24 @@ function findRoutes(addresses){
 
   for (var start = 0; start < addresses.length-1; start++){
     //setTimeout, loop with delay = 1 sec * add.length
-    var duration = 1000 * addresses.length;
+    var duration = 2000 * addresses.length;
     setTimeout(
-      (function(s){
+      (function(s, count){
         return function(){
           console.log("start: "+s);
-          for (var end = s + 1; end < addresses.length; end++){
-            var delay = 1000;
+          for (var end = count + 1; end < addresses.length; end++){
+            var delay = 2000;
             setTimeout(
               (function(e){
                 console.log("end: "+e);
                 routeCount ++;
-                calcRoute(addresses[s], addresses[e], callback);
-              })(end), delay);
-            delay += 1000;
+                calcRoute(s, e, callback);
+              })(addresses[end]), delay);
+            delay = delay + 2000;
           }
         }
-      })(start), duration);
-    duration += duration;
-
-
-    // for (var end = start + 1; end < addresses.length; end++){
-    //   //setTimeout, loop with delay = 1sec + 1sec
-    //   routeCount ++;
-    //   calcRoute(addresses[start], addresses[end], callback);
-    // }
+      })(addresses[start], start), duration);
+    duration = duration + 2000 * addresses.length;
   }
 }
 
