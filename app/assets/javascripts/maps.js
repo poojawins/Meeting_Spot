@@ -41,13 +41,12 @@ function addMarker(place){
   	map:map,
     icon:image,
   });
-
   newMark.info = new google.maps.InfoWindow({
     content:"<p>" + "<strong>" + place.name + "</strong>" + "<br />" + "Rating: " + place.rating + "<br />" + "Price: " + place.price_level + "<br />" + place.formatted_address + "</p>"
   });
   google.maps.event.addListener(newMark, 'click', function() {
     newMark.info.open(map, newMark);
-  }); 
+  });
   return newMark;
 } 
 
@@ -165,7 +164,9 @@ function findPlaces(midpoint){
           } 
           prev_selected = marker; 
           marker.setIcon("/assets/red_dot.png"); 
-          marker.info.open(map, marker);}).appendTo($ourPlacesList); 
+          marker.info.open(map, marker); 
+          map.setCenter(marker.position);
+          map.setZoom(16);}).appendTo($ourPlacesList);
         })(addMarker(placesResponse[i]));
       }
 
