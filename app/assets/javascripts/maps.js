@@ -8,24 +8,24 @@ var placesResponse;
 function initialize(){
   directionsService = new google.maps.DirectionsService();
   var mapProp = {
-    center:new google.maps.LatLng(lat, lon), 
+    center:new google.maps.LatLng(lat, lon),
     zoom:12,
     mapTypeID:google.maps.MapTypeId.ROADMAP,
     maxZoom: 16
   };
-  
+
   map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 }
 
-function addAllMarkers(){ 
+function addAllMarkers(){
   markers.forEach(function(marker){
     var lat = marker.latitude;
     var lon = marker.longitude;
     var loc = new google.maps.LatLng(lat,lon);
     var newMark = new google.maps.Marker({
-      position: loc, 
+      position: loc,
       map:map
-    }); 
+    });
     bounds.extend(loc);
   });
 
@@ -37,11 +37,11 @@ function addAllMarkers(){
 
 function addMarker(latlong){
   var newMark = new google.maps.Marker({
-  	position:latlong, 
+  	position:latlong,
   	map:map,
     icon:image
-  });	
-} 
+  });
+}
 
 function calcRoute(startLoc, endLoc, callback){
   // for (i = 0; i < markerArray.length; i++){
@@ -54,12 +54,12 @@ function calcRoute(startLoc, endLoc, callback){
     travelMode: google.maps.TravelMode.TRANSIT,
     transitOptions:{
       departureTime: new Date(2014, 1, 4, 13)
-    }   
+    }
   }
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       var directionResults = response;
-      // var warnings = document.getElementById("warnings_panel") 
+      // var warnings = document.getElementById("warnings_panel")
       // warnings = " " + response.routes[0].warnings + " ";
     } else {
       console.log("error: "+status);
@@ -83,7 +83,7 @@ function findDuration(directions){
 
 function findRoutes(addresses){
   var routeArray = [];
-  var routeCount = 0; 
+  var routeCount = 0;
   var responseCount = 0;
 
   var callback = function (results){
@@ -93,29 +93,39 @@ function findRoutes(addresses){
       // we're done! routeArray is full!
       // call something
       var midpoint = midWay(routeArray);
-      
+
       findPlaces(midpoint);
       }
-    
+
   };
 
-  for (var start = 0; start < addresses.length; start++){
+  for (var start = 0; start < addresses.length-1; start++){
     //setTimeout, loop with delay = 1 sec * add.length
-    duration = 3000;
+    var duration = 1000 * addresses.length;
     setTimeout(
       (function(s){
         return function(){
-          console.log(s);
+          console.log("start: "+s);
+          for (var end = s + 1; end < addresses.length; end++){
+            var delay = 1000;
+            setTimeout(
+              (function(e){
+                console.log("end: "+e);
+                routeCount ++;
+                calcRoute(addresses[s], addresses[e], callback);
+              })(end), delay);
+            delay += 1000;
+          }
         }
       })(start), duration);
-    duration += 3000;
+    duration += duration;
 
 
     // for (var end = start + 1; end < addresses.length; end++){
     //   //setTimeout, loop with delay = 1sec + 1sec
     //   routeCount ++;
     //   calcRoute(addresses[start], addresses[end], callback);
-    // } 
+    // }
   }
 }
 
@@ -124,7 +134,7 @@ function findLongestRoute(routeArray){
   for (var i = 1; i < routeArray.length; i++){
     if (findDuration(routeArray[i]) > findDuration(longest)){
       longest = routeArray[i];
-    } 
+    }
   }
   return longest;
 }
@@ -149,9 +159,9 @@ function findPlaces(midpoint){
   };
 
   var service = new google.maps.places.PlacesService(map);
-  // service.getDetails(request, callback); 
-  service.nearbySearch(request, function(results, status){ 
-    placesResponse = results; //placesResponse holds an array of places objects 
+  // service.getDetails(request, callback);
+  service.nearbySearch(request, function(results, status){
+    placesResponse = results; //placesResponse holds an array of places objects
   });
 
   setTimeout(function(){
@@ -165,38 +175,38 @@ function findPlaces(midpoint){
         addMarker(placesResponse[i].geometry.location);
         $("<li class='place'> Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").appendTo($ourPlacesList);
       }
-      
+
       placesResponseObjs.push({
-        name: placesResponse[i].name, 
-        latitude: placesResponse[i].geometry.location.d, 
-        longitude:placesResponse[i].geometry.location.e, 
-        price_level:placesResponse[i].price_level, 
-        rating: placesResponse[i].rating, 
-        reference:placesResponse[i].reference, 
+        name: placesResponse[i].name,
+        latitude: placesResponse[i].geometry.location.d,
+        longitude:placesResponse[i].geometry.location.e,
+        price_level:placesResponse[i].price_level,
+        rating: placesResponse[i].rating,
+        reference:placesResponse[i].reference,
         types: placesResponse[i].types.join(",")
-      });      
+      });
     }
 
     $.ajax('/maps/' + map_id + '/places', {
       type: 'POST',
       dataType: 'json',
       data: {places:placesResponseObjs},
-      beforeSend: function(){ 
+      beforeSend: function(){
         $('#place-btn').prop('disabled', true); //Trying to disable the button while the data is being posted to DB
-      }, 
-      complete: function(){ 
+      },
+      complete: function(){
         $('#place-btn').prop('disabled', false);
       }
     });
   }, 2000); //Might need to adjust sleep duration according to number of returned results
-    
+
 }
 
-$(document).ready(function(){    
+$(document).ready(function(){
   $("#place-btn").on("click", function(){
     //If DB already don't find the routes again
 
-    //AJAX request for selectionPlaces...working much better but won't work if button is clicked too fast after initial request 
+    //AJAX request for selectionPlaces...working much better but won't work if button is clicked too fast after initial request
     $.ajax('/maps/' + map_id + '/places', {
       type: 'GET',
       success: function(data) {
@@ -211,14 +221,14 @@ $(document).ready(function(){
       complete: function(){
         $('#place-btn').prop('disabled', false);
       }
-     
+
     // function(data){
-    //   selectionPlaces = $.parseJSON(data);   
+    //   selectionPlaces = $.parseJSON(data);
     });
 
-    
+
     if(selectionPlaces.length){
-      var placesResponse = selectionPlaces; 
+      var placesResponse = selectionPlaces;
       console.log("Pulling from the DB");
       //This is just the same code from the findPlaces function. Definitely needs to be refactored
       var $ourPlacesList = $("#googlePlaces ul");
@@ -230,9 +240,9 @@ $(document).ready(function(){
     }else{
       console.log("Pulling from Google");
       findRoutes(addressArray);
-      //Completely disable the button to prevent over query limit from Google. 
+      //Completely disable the button to prevent over query limit from Google.
       setTimeout(function(){
-        $('#place-btn').prop('disabled', true); 
+        $('#place-btn').prop('disabled', true);
       },7000);
       $('#place-btn').prop('disabled', false);
     }
