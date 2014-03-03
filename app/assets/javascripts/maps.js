@@ -61,10 +61,16 @@ function calcRoute(startLoc, endLoc, callback){
       var directionResults = response;
       // var warnings = document.getElementById("warnings_panel")
       // warnings = " " + response.routes[0].warnings + " ";
-    } else {
+      callback(directionResults);
+    } else if(status == "OVER_QUERY_LIMIT") {
       console.log("error: "+status);
+      setTimeout(function(){
+        calcRoute(startLoc, endLoc, callback);
+      }, 2000);
+    } else {
+      throw status;
     }
-    callback(directionResults);
+
     // routeArray.push(directionResults);
   });
 }
