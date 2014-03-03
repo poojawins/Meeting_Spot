@@ -44,9 +44,6 @@ function addMarker(latlong){
 }
 
 function calcRoute(startLoc, endLoc, callback){
-  // for (i = 0; i < markerArray.length; i++){
-  //   markerArray[i].setMap(null);
-  // }
 
   var request = {
     origin: startLoc,
@@ -59,19 +56,14 @@ function calcRoute(startLoc, endLoc, callback){
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       var directionResults = response;
-      // var warnings = document.getElementById("warnings_panel")
-      // warnings = " " + response.routes[0].warnings + " ";
       callback(directionResults);
     } else if(status == "OVER_QUERY_LIMIT") {
       console.log("error: "+status);
-      setTimeout(function(){
-        calcRoute(startLoc, endLoc, callback);
-      }, 2000);
+      callback(status);
     } else {
-      throw status;
+      throw new Error(status);
     }
 
-    // routeArray.push(directionResults);
   });
 }
 
@@ -93,36 +85,43 @@ function findRoutes(addresses){
   var responseCount = 0;
 
   var callback = function (results){
-    routeArray.push(results);
-    responseCount ++;
-    if (responseCount >= routeCount) {
-      // we're done! routeArray is full!
-      // call something
-      var midpoint = midWay(routeArray);
+    if (results == "OVER_QUERY_LIMIT"){
+      setTimeout(function(){
+        calcRoute(locations[0], locations[1], callback);
+      }, 2000);
+    } else if (combinations.length > 0){
+      routeArray.push(results);
+      responseCount ++;
+      combinations.shift();
+      if (combinations.length != 0){
+        calculateFirstSet();
+      } else if (responseCount >= routeCount) {
+        // we're done! routeArray is full!
+        // call something
+        var midpoint = midWay(routeArray);
 
-      findPlaces(midpoint);
+        findPlaces(midpoint);
       }
-
-  };
-
-  var delayedCalcRoute = function(s, e){
-    return function(){
-      console.log("start: "+ s);
-      console.log("end: "+e);
-      calcRoute(s, e, callback);
     }
+
   };
 
-  var i = 0;
-  for (var start = 0; start < addresses.length-1; start++){
+  var combinations = [];
+  for (var start = 0; start < addresses.length; start++){
     //setTimeout, loop with delay = 1 sec * add.length
     for (var end = start + 1; end < addresses.length; end++){
-      i++;
-      var delay = 4000;
-      routeCount ++;
-      setTimeout(delayedCalcRoute(addresses[start], addresses[end]), delay*i);
+      combinations.push([addresses[start], addresses[end]]);
+      routeCount++;
     }
   }
+
+  function calculateFirstSet(){
+    locations = combinations[0];
+    calcRoute(locations[0], locations[1], callback);
+  }
+
+  calculateFirstSet();
+
 }
 
 function findLongestRoute(routeArray){
@@ -183,17 +182,17 @@ function findPlaces(midpoint){
       });
     }
 
-    $.ajax('/maps/' + map_id + '/places', {
-      type: 'POST',
-      dataType: 'json',
-      data: {places:placesResponseObjs},
-      beforeSend: function(){
-        $('#place-btn').prop('disabled', true); //Trying to disable the button while the data is being posted to DB
-      },
-      complete: function(){
-        $('#place-btn').prop('disabled', false);
-      }
-    });
+    // $.ajax('/maps/' + map_id + '/places', {
+    //   type: 'POST',
+    //   dataType: 'json',
+    //   data: {places:placesResponseObjs},
+    //   beforeSend: function(){
+    //     $('#place-btn').prop('disabled', true); //Trying to disable the button while the data is being posted to DB
+    //   },
+    //   complete: function(){
+    //     $('#place-btn').prop('disabled', false);
+    //   }
+    // });
   }, 2000); //Might need to adjust sleep duration according to number of returned results
 
 }
