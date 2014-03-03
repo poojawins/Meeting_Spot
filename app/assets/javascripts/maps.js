@@ -99,26 +99,23 @@ function findRoutes(addresses){
 
   };
 
+  var delayedCalcRoute = function(s, e){
+    return function(){
+      console.log("start: "+ s);
+      console.log("end: "+e);
+      calcRoute(s, e, callback);
+    }
+  };
+
+  var i = 0;
   for (var start = 0; start < addresses.length-1; start++){
     //setTimeout, loop with delay = 1 sec * add.length
-    var duration = 2000 * addresses.length;
-    setTimeout(
-      (function(s, count){
-        return function(){
-          console.log("start: "+s);
-          for (var end = count + 1; end < addresses.length; end++){
-            var delay = 2000;
-            setTimeout(
-              (function(e){
-                console.log("end: "+e);
-                routeCount ++;
-                calcRoute(s, e, callback);
-              })(addresses[end]), delay);
-            delay = delay + 2000;
-          }
-        }
-      })(addresses[start], start), duration);
-    duration = duration + 2000 * addresses.length;
+    for (var end = start + 1; end < addresses.length; end++){
+      i++;
+      var delay = 4000;
+      routeCount ++;
+      setTimeout(delayedCalcRoute(addresses[start], addresses[end]), delay*i);
+    }
   }
 }
 
@@ -220,7 +217,7 @@ $(document).ready(function(){
     });
 
 
-    if(selectionPlaces.length){
+    if(false && selectionPlaces.length){
       var placesResponse = selectionPlaces;
       console.log("Pulling from the DB");
       //This is just the same code from the findPlaces function. Definitely needs to be refactored
