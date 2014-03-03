@@ -153,11 +153,17 @@ function findPlaces(midpoint){
   setTimeout(function(){
     var $ourPlacesList = $("#googlePlaces ul");
     $ourPlacesList.find("li").remove();
-
+    var prev_selected = false;
     for(var i=0; i < placesResponse.length; i++){
       if(i < 5){
         (function(marker) {
-        $("<li class='place'>" + "Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").click(function(){marker.setIcon("/assets/red_dot.png"); marker.info.open(map, marker);}).appendTo($ourPlacesList);
+        $("<li class='place'>" + "Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").click(function(){
+          if( prev_selected ) {
+            prev_selected.info.close();
+            prev_selected.setIcon(image);
+          } prev_selected = marker; 
+            marker.setIcon("/assets/red_dot.png"); 
+            marker.info.open(map, marker);}).appendTo($ourPlacesList); 
       })(addMarker(placesResponse[i]));
       }
 
