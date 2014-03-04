@@ -11,24 +11,24 @@ var pricePoint;
 function initialize(){
   directionsService = new google.maps.DirectionsService();
   var mapProp = {
-    center:new google.maps.LatLng(lat, lon), 
+    center:new google.maps.LatLng(lat, lon),
     zoom:12,
     mapTypeID:google.maps.MapTypeId.ROADMAP,
     maxZoom: 16
   };
-  
+
   map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 }
 
-function addAllMarkers(){ 
+function addAllMarkers(){
   markers.forEach(function(marker){
     var lat = marker.latitude;
     var lon = marker.longitude;
     var loc = new google.maps.LatLng(lat,lon);
     var newMark = new google.maps.Marker({
-      position: loc, 
+      position: loc,
       map:map
-    }); 
+    });
     bounds.extend(loc);
   });
 
@@ -40,16 +40,13 @@ function addAllMarkers(){
 
 function addMarker(latlong){
   var newMark = new google.maps.Marker({
-  	position:latlong, 
+  	position:latlong,
   	map:map,
     icon:image
-  });	
-} 
+  });
+}
 
 function calcRoute(startLoc, endLoc, callback){
-  // for (i = 0; i < markerArray.length; i++){
-  //   markerArray[i].setMap(null);
-  // }
 
   var request = {
     origin: startLoc,
@@ -62,13 +59,13 @@ function calcRoute(startLoc, endLoc, callback){
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       var directionResults = response;
-      // var warnings = document.getElementById("warnings_panel") 
-      // warnings = " " + response.routes[0].warnings + " ";
+      callback(directionResults);
+    } else if(status == "OVER_QUERY_LIMIT") {
+      callback(status);
     } else {
-      console.log("error: "+status);
+      throw new Error(status);
     }
-    callback(directionResults);
-    // routeArray.push(directionResults);
+
   });
 }
 
@@ -86,28 +83,49 @@ function findDuration(directions){
 
 function findRoutes(addresses){
   var routeArray = [];
-  var routeCount = 0; 
+  var routeCount = 0;
   var responseCount = 0;
 
   var callback = function (results){
-    routeArray.push(results);
-    responseCount ++;
-    if (responseCount >= routeCount) {
-      // we're done! routeArray is full!
-      // call something
-      var midpoint = midWay(routeArray);
-      
-      findPlaces(midpoint);
+    if (results == "OVER_QUERY_LIMIT"){
+      setTimeout(function(){
+        console.log("retrying: "+results);
+        calcRoute(locations[0], locations[1], callback);
+      }, 2000);
+    } else if (combinations.length > 0){
+      console.log("ok");
+      routeArray.push(results);
+      responseCount ++;
+      combinations.shift();
+      if (combinations.length != 0){
+        calculateFirstSet();
+      } else if (responseCount >= routeCount) {
+        // we're done! routeArray is full!
+        // call something
+        var midpoint = midWay(routeArray);
+
+        findPlaces(midpoint);
       }
-    
+    }
+
   };
 
+  var combinations = [];
   for (var start = 0; start < addresses.length; start++){
+    //setTimeout, loop with delay = 1 sec * add.length
     for (var end = start + 1; end < addresses.length; end++){
-      routeCount ++;
-      calcRoute(addresses[start], addresses[end], callback);
-    } 
+      combinations.push([addresses[start], addresses[end]]);
+      routeCount++;
+    }
   }
+
+  function calculateFirstSet(){
+    locations = combinations[0];
+    calcRoute(locations[0], locations[1], callback);
+  }
+
+  calculateFirstSet();
+
 }
 
 function findLongestRoute(routeArray){
@@ -115,7 +133,7 @@ function findLongestRoute(routeArray){
   for (var i = 1; i < routeArray.length; i++){
     if (findDuration(routeArray[i]) > findDuration(longest)){
       longest = routeArray[i];
-    } 
+    }
   }
   return longest;
 }
@@ -142,9 +160,9 @@ function findPlaces(midpoint){
   };
 
   var service = new google.maps.places.PlacesService(map);
-  // service.getDetails(request, callback); 
-  service.nearbySearch(request, function(results, status){ 
-    placesResponse = results; //placesResponse holds an array of places objects 
+  // service.getDetails(request, callback);
+  service.nearbySearch(request, function(results, status){
+    placesResponse = results; //placesResponse holds an array of places objects
   });
 
   setTimeout(function(){
@@ -158,35 +176,35 @@ function findPlaces(midpoint){
         addMarker(placesResponse[i].geometry.location);
         $("<li class='place'> Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").appendTo($ourPlacesList);
       }
-      
+
       placesResponseObjs.push({
-        name: placesResponse[i].name, 
-        latitude: placesResponse[i].geometry.location.d, 
-        longitude:placesResponse[i].geometry.location.e, 
-        price_level:placesResponse[i].price_level, 
-        rating: placesResponse[i].rating, 
-        reference:placesResponse[i].reference, 
+        name: placesResponse[i].name,
+        latitude: placesResponse[i].geometry.location.d,
+        longitude:placesResponse[i].geometry.location.e,
+        price_level:placesResponse[i].price_level,
+        rating: placesResponse[i].rating,
+        reference:placesResponse[i].reference,
         types: placesResponse[i].types.join(",")
-      });      
+      });
     }
 
-    $.ajax('/maps/' + map_id + '/places', {
-      type: 'POST',
-      dataType: 'json',
-      data: {places:placesResponseObjs},
-      beforeSend: function(){ 
-        $('#place-btn').prop('disabled', true); //Trying to disable the button while the data is being posted to DB
-      }, 
-      complete: function(){ 
-        $('#place-btn').prop('disabled', false);
-      }
-    });
+    // $.ajax('/maps/' + map_id + '/places', {
+    //   type: 'POST',
+    //   dataType: 'json',
+    //   data: {places:placesResponseObjs},
+    //   beforeSend: function(){
+    //     $('#place-btn').prop('disabled', true); //Trying to disable the button while the data is being posted to DB
+    //   },
+    //   complete: function(){
+    //     $('#place-btn').prop('disabled', false);
+    //   }
+    // });
   }, 2000); //Might need to adjust sleep duration according to number of returned results
-    
+
 }
 
-$(document).ready(function(){    
-  $("#place-btn").on("click", function(e){
+$(document).ready(function(){
+  $("#place-btn").on("click", function(){
     //If DB already don't find the routes again
     
     pricePoint = $('input[name=placePrice]:radio:checked').val()
@@ -199,7 +217,7 @@ $(document).ready(function(){
     if (dateTime == "") meetingDate = new Date();
     else meetingDate = new Date(dateTime);
 
-    //AJAX request for selectionPlaces...working much better but won't work if button is clicked too fast after initial request 
+    //AJAX request for selectionPlaces...working much better but won't work if button is clicked too fast after initial request
     $.ajax('/maps/' + map_id + '/places', {
       type: 'GET',
       success: function(data) {
@@ -214,13 +232,13 @@ $(document).ready(function(){
       complete: function(){
         $('#place-btn').prop('disabled', false);
       }
-     
+
     // function(data){
-    //   selectionPlaces = $.parseJSON(data);   
+    //   selectionPlaces = $.parseJSON(data);
     });
-    
-    if(selectionPlaces.length && false){
-      var placesResponse = selectionPlaces; 
+
+    if(false && selectionPlaces.length){
+      var placesResponse = selectionPlaces;
       console.log("Pulling from the DB");
       //This is just the same code from the findPlaces function. Definitely needs to be refactored
       var $ourPlacesList = $("#googlePlaces ul");
@@ -232,9 +250,9 @@ $(document).ready(function(){
     }else{
       console.log("Pulling from Google");
       findRoutes(addressArray);
-      //Completely disable the button to prevent over query limit from Google. 
+      //Completely disable the button to prevent over query limit from Google.
       setTimeout(function(){
-        $('#place-btn').prop('disabled', true); 
+        $('#place-btn').prop('disabled', true);
       },7000);
       $('#place-btn').prop('disabled', false);
     }
