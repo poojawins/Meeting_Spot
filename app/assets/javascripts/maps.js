@@ -165,8 +165,9 @@ function findPlaces(midpoint){
           prev_selected = marker; 
           marker.setIcon("/assets/red_dot.png"); 
           marker.info.open(map, marker); 
-          map.setCenter(marker.position);
-          map.setZoom(16);}).appendTo($ourPlacesList);
+          map.setCenter(midpoint[0],midpoint[1]);
+          map.setZoom(15);
+          }).appendTo($ourPlacesList);
         })(addMarker(placesResponse[i]));
       }
 
