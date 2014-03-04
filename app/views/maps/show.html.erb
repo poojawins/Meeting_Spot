@@ -1,4 +1,4 @@
-<h1><%= @map.map_title %></h1>
+<h1><%= @map.map_title.titleize %></h1>
 
 <script>
   var lat = <%=  @map.middle_ground_lat %>;
@@ -9,17 +9,18 @@
   var map_id = <%= @map.id %>;
   var selectionPlaces  = <%= raw @map.places.to_json %>;
 </script>
-
+<div id="wrapper">
 <div id="googleMap" style="width:60%;height:380px; border:solid black 1px; display:inline-block;"></div>
 <div id="googlePlaces" style="width:35%;height:380px; border:solid black 1px; display:inline-block; margin:0 2%;"><ul></ul></div>
-
+</div>
 <%= render "address_form" %>
 
+<br>
 <div class="address_list">
   <ul>
     <% @map.addresses.each do |address| %>
       <% next if address.id.nil? %>
-      <li><%= address.name %>: <%= address.place %> <%= link_to "Delete", map_address_path(address.map_id, address.id), :confirm => "Are you sure you want to delete this address?", :method => :delete %></li>
+      <li><%= address.name.capitalize %>: <%= address.place.titleize %> <%= link_to "Delete", map_address_path(address.map_id, address.id), :confirm => "Are you sure you want to delete this address?", :method => :delete %></li>
     <% end %>
   </ul>
 </div>
@@ -77,9 +78,11 @@
 
 
 
+
 <button id="place-btn">Find Meeting Place</button>
 
 
+<br>
 <br>
 <%= link_to "Back to all maps", maps_path %>
 

@@ -38,13 +38,20 @@ function addAllMarkers(){
   }
 }
 
-function addMarker(latlong){
+function addMarker(place){
   var newMark = new google.maps.Marker({
-  	position:latlong,
+  	position:place.geometry.location, 
   	map:map,
-    icon:image
+    icon:image,
   });
-}
+  newMark.info = new google.maps.InfoWindow({
+    content:"<p>" + "<strong>" + place.name + "</strong>" + "<br />" + "Rating: " + place.rating + "<br />" + "Price: " + place.price_level + "<br />" + place.formatted_address + "</p>"
+  });
+  google.maps.event.addListener(newMark, 'click', function() {
+    newMark.info.open(map, newMark);
+  });
+  return newMark;
+} 
 
 function calcRoute(startLoc, endLoc, callback){
 
@@ -149,9 +156,8 @@ function convertToLatLonObjects(addressArray){
 
 function findPlaces(midpoint){
   //var placesResponse;
-   var placesResponseObjs = [];
-  
-  console.log("Searching for " + placeTypes + " at a price point " + pricePoint + " meeting date and time " + meetingDate);
+  var placesResponseObjs = [];
+
   var request = {
     location: new google.maps.LatLng(midpoint[0],midpoint[1]),
     radius: '500', //meters
@@ -168,13 +174,23 @@ function findPlaces(midpoint){
   setTimeout(function(){
     var $ourPlacesList = $("#googlePlaces ul");
     $ourPlacesList.find("li").remove();
-
-
-
+    var prev_selected = false;
     for(var i=0; i < placesResponse.length; i++){
       if(i < 5){
-        addMarker(placesResponse[i].geometry.location);
-        $("<li class='place'> Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>").appendTo($ourPlacesList);
+        (function(marker) {
+        $("<li class='place'>" + "Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>"
+        ).click(function(){
+          if( prev_selected ) {
+            prev_selected.info.close();
+            prev_selected.setIcon(image);
+          } 
+          prev_selected = marker; 
+          marker.setIcon("/assets/red_dot.png"); 
+          marker.info.open(map, marker); 
+          map.setCenter(midpoint[0],midpoint[1]);
+          map.setZoom(15);
+          }).appendTo($ourPlacesList);
+        })(addMarker(placesResponse[i]));
       }
 
       placesResponseObjs.push({
@@ -269,7 +285,6 @@ setInterval(function(){
     });
   }
 }, 100);
-
 
    //1. check if full place info is in database
     //2. if not in database, request info from google
