@@ -1,0 +1,90 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+ */
+/* apply a natural box layout model to all elements */
+*, *:before, *:after {
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+ }
+
+body {
+  background-color: #707070;
+  padding: 25px 15px 10px 15px;
+  font-family: 'Lato', sans-serif;
+  font-size: 20px;
+  color: black;
+}
+
+ul
+{
+  list-style-type: none;
+}
+
+li {
+  font-size: 20px;
+}
+
+li.place {
+  font-size: 18px;
+}
+
+#main {
+  font-size: 35px;
+  font-family: 'Lato', sans-serif;
+  color: #5ec4cd;
+}
+
+.top {
+  font-size: 24px;
+  font-family: 'Lato', sans-serif;
+  color: navy;
+  text-align: left;
+}
+
+h1 {
+  font-size: 45px;
+  font-family: 'Lato', sans-serif;
+  color: #ea7d24;
+}
+
+#googlePlaces {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: #5ec4cd;
+}
+
+.highlight{
+  color: red;
+}
+
+#wrapper {
+  width: 100%;
+  height: 380px;
+  position: relative;
+}
+
+a:link {
+  color: #ffd573;
+}
+
+a:visited {
+  color: #ffd573;
+}
+
+#place-btn {
+  margin-left: 35px;
+  width: 150px;
+  height: 35px;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+}
