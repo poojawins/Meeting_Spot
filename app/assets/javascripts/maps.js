@@ -40,7 +40,7 @@ function addAllMarkers(){
 
 function addMarker(place){
   var newMark = new google.maps.Marker({
-  	position:place.geometry.location, 
+  	position:place.geometry.location,
   	map:map,
     icon:image,
   });
@@ -51,7 +51,7 @@ function addMarker(place){
     newMark.info.open(map, newMark);
   });
   return newMark;
-} 
+}
 
 function calcRoute(startLoc, endLoc, callback){
 
@@ -61,7 +61,7 @@ function calcRoute(startLoc, endLoc, callback){
     travelMode: google.maps.TravelMode.TRANSIT,
     transitOptions:{
       departureTime: meetingDate
-    }   
+    }
   }
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
@@ -183,10 +183,10 @@ function findPlaces(midpoint){
           if( prev_selected ) {
             prev_selected.info.close();
             prev_selected.setIcon(image);
-          } 
-          prev_selected = marker; 
-          marker.setIcon("/assets/red_dot.png"); 
-          marker.info.open(map, marker); 
+          }
+          prev_selected = marker;
+          marker.setIcon("/assets/red_dot.png");
+          marker.info.open(map, marker);
           map.setCenter(midpoint[0],midpoint[1]);
           map.setZoom(15);
           }).appendTo($ourPlacesList);
@@ -222,36 +222,36 @@ function findPlaces(midpoint){
 $(document).ready(function(){
   $("#place-btn").on("click", function(){
     //If DB already don't find the routes again
-    
+
     pricePoint = $('input[name=placePrice]:radio:checked').val()
 
     $('input[name=placeType]:checked').each(function(){
         placeTypes.push($(this).val());
     }); //Value of all checked for place types
-    
+
     //Grab value from the datetime field
     var dateTime = $("#placeDate-id").val().replace('T', ' ');
     meetingDate = new Date(dateTime);
 
     //AJAX request for selectionPlaces...working much better but won't work if button is clicked too fast after initial request
-    $.ajax('/maps/' + map_id + '/places', {
-      type: 'GET',
-      success: function(data) {
-        selectionPlaces = $.parseJSON(data);
-      },
-      error: function() {
-        console.log("Error with the fetch");
-        },
-      beforeSend: function(){
-        $('#place-btn').prop('disabled', true);
-      },
-      complete: function(){
-        $('#place-btn').prop('disabled', false);
-      }
-
-    // function(data){
-    //   selectionPlaces = $.parseJSON(data);
-    });
+    // $.ajax('/maps/' + map_id + '/places', {
+    //   type: 'GET',
+    //   success: function(data) {
+    //     selectionPlaces = $.parseJSON(data);
+    //   },
+    //   error: function() {
+    //     console.log("Error with the fetch");
+    //     },
+    //   beforeSend: function(){
+    //     $('#place-btn').prop('disabled', true);
+    //   },
+    //   complete: function(){
+    //     $('#place-btn').prop('disabled', false);
+    //   }
+    //
+    // // function(data){
+    // //   selectionPlaces = $.parseJSON(data);
+    // });
 
     if(false && selectionPlaces.length){
       var placesResponse = selectionPlaces;
