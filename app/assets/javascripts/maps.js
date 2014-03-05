@@ -60,7 +60,7 @@ function calcRoute(startLoc, endLoc, callback){
     destination: endLoc,
     travelMode: google.maps.TravelMode.TRANSIT,
     transitOptions:{
-      departureTime: new Date(meetingDate)
+      departureTime: meetingDate
     }   
   }
   directionsService.route(request, function(response, status) {
@@ -229,9 +229,9 @@ $(document).ready(function(){
         placeTypes.push($(this).val());
     }); //Value of all checked for place types
     
+    //Grab value from the datetime field
     var dateTime = $("#placeDate-id").val().replace('T', ' ');
-    if (dateTime == "") meetingDate = new Date();
-    else meetingDate = new Date(dateTime);
+    meetingDate = new Date(dateTime);
 
     //AJAX request for selectionPlaces...working much better but won't work if button is clicked too fast after initial request
     $.ajax('/maps/' + map_id + '/places', {
