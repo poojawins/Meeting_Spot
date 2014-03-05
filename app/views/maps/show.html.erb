@@ -75,18 +75,14 @@
   </form>
 </div>
 
-
-
-
 <button id="place-btn">Find Meeting Place</button>
-
 
 <br>
 <br>
 <%= link_to "Back to all maps", maps_path %>
 
 <script>
- //Set Default value of Date/Time based on local time
+  //Set Default value of Date/Time based on local time
   Date.prototype.toDateInputValue = (function() {
     var local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset()); // accounts for timezone differences
@@ -97,4 +93,20 @@
 
   google.maps.event.addDomListener(window, "load", initialize);
   google.maps.event.addDomListener(window, "load", addAllMarkers);
+
+  $(document).ready(function() {
+    $('#place-btn').click(function() {
+        $.blockUI({ message: "<div class='loader8'></div>",css: {
+            border: 'none',
+            padding: '15px',
+            backgroundColor: '#000',
+            '-webkit-border-radius': '10px',
+            '-moz-border-radius': '10px',
+            opacity: .5,
+            color: '#fff'
+        } });
+
+        // setTimeout($.unblockUI, 2000);
+    });
+});
 </script>
