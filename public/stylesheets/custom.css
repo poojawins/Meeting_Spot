@@ -115,9 +115,21 @@ a:visited {
 }
 
 #place-btn {
-  margin-left: 35px;
+  margin: 10px 0 0 35px;
   width: 150px;
   height: 35px;
   font-family: 'Lato', sans-serif;
   font-size: 14px;
+}
+
+.placeParams {
+  display: inline-block;
+  height: 245px;
+  width: 300px;
+  margin: 5px 10px;
+  vertical-align: top;
+}
+
+fieldset {
+  height: 245px;
 }
