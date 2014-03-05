@@ -45,7 +45,7 @@ function addMarker(place){
     icon:image,
   });
   newMark.info = new google.maps.InfoWindow({
-    content:"<p>" + "<strong>" + place.name + "</strong>" + "<br />" + "Rating: " + place.rating + "<br />" + "Price: " + place.price_level + "<br />" + place.formatted_address + "</p>"
+    content:"<p>" + "<strong>" + place.name + "</strong>" + "<br />" + "Rating: " + place.rating + "<br />" + "Price: " + place.price_level + "<br />" + place.vicinity + "</p>"
   });
   google.maps.event.addListener(newMark, 'click', function() {
     newMark.info.open(map, newMark);
