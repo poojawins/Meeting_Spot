@@ -175,6 +175,9 @@ function findPlaces(midpoint){
     var $ourPlacesList = $("#googlePlaces ul");
     $ourPlacesList.find("li").remove();
     var prev_selected = false;
+    if (placesResponse.length == 0){
+      $("<li>Sorry, we couldn't find any results for your search. Please broaden your selections and try again.</li>").appendTo($ourPlacesList);
+    }
     for(var i=0; i < placesResponse.length; i++){
       if(i < 5){
         (function(marker) {
