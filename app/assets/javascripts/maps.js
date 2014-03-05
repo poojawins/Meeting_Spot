@@ -234,24 +234,24 @@ $(document).ready(function(){
     else meetingDate = new Date(dateTime);
 
     //AJAX request for selectionPlaces...working much better but won't work if button is clicked too fast after initial request
-    $.ajax('/maps/' + map_id + '/places', {
-      type: 'GET',
-      success: function(data) {
-        selectionPlaces = $.parseJSON(data);
-      },
-      error: function() {
-        console.log("Error with the fetch");
-        },
-      beforeSend: function(){
-        $('#place-btn').prop('disabled', true);
-      },
-      complete: function(){
-        $('#place-btn').prop('disabled', false);
-      }
+    // $.ajax('/maps/' + map_id + '/places', {
+    //   type: 'GET',
+    //   success: function(data) {
+    //     selectionPlaces = $.parseJSON(data);
+    //   },
+    //   error: function() {
+    //     console.log("Error with the fetch");
+    //     },
+    //   beforeSend: function(){
+    //     $('#place-btn').prop('disabled', true);
+    //   },
+    //   complete: function(){
+    //     $('#place-btn').prop('disabled', false);
+    //   }
 
-    // function(data){
-    //   selectionPlaces = $.parseJSON(data);
-    });
+    // // function(data){
+    // //   selectionPlaces = $.parseJSON(data);
+    // });
 
     if(false && selectionPlaces.length){
       var placesResponse = selectionPlaces;

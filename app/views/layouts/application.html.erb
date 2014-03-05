@@ -9,11 +9,14 @@
   <%= favicon_link_tag '/assets/favicon.png' %>
   <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
   <script src="http://maps.googleapis.com/maps/api/js?key=<%= ENV["KEEFS_API_KEY"] %>&libraries=places&sensor=false"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 <h1 id="main">Social Radius: Let us help you figure out where to meet!</h1>
 <%= yield %>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="/assets/jQuery.blockUI.js"></script>
+
 </body>
 </html>
