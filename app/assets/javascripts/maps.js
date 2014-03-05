@@ -38,6 +38,20 @@ function addAllMarkers(){
   }
 }
 
+
+function symbol(number, symbol){
+  if (number){
+    var output = "";
+    for (var i = 0; i < number; i++){
+      output += symbol;
+    }
+    return output;
+  } else {
+    return "not found";
+  }
+}
+
+
 function addMarker(place){
   var newMark = new google.maps.Marker({
   	position:place.geometry.location,
@@ -45,7 +59,7 @@ function addMarker(place){
     icon:image,
   });
   newMark.info = new google.maps.InfoWindow({
-    content:"<p>" + "<strong>" + place.name + "</strong>" + "<br />" + "Rating: " + place.rating + "<br />" + "Price: " + place.price_level + "<br />" + place.vicinity + "</p>"
+    content:"<p>" + "<strong>" + place.name + "</strong>" + "<br />" + "Rating: " + symbol(place.rating, "&#9733;") + "<br />" + "Price: " + symbol(place.price_level, "$") + "<br />" + place.vicinity + "</p>"
   });
   google.maps.event.addListener(newMark, 'click', function() {
     newMark.info.open(map, newMark);
@@ -177,34 +191,35 @@ function findPlaces(midpoint){
     var prev_selected = false;
     if (placesResponse.length == 0){
       $("<li>Sorry, we couldn't find any results for your search. Please broaden your selections and try again.</li>").appendTo($ourPlacesList);
-    }
-    for(var i=0; i < placesResponse.length; i++){
-      if(i < 5){
-        (function(marker) {
-        $("<li class='place'>" + "Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>"
-        ).click(function(){
-          if( prev_selected ) {
-            prev_selected.info.close();
-            prev_selected.setIcon(image);
-          }
-          prev_selected = marker;
-          marker.setIcon("/assets/red_dot.png");
-          marker.info.open(map, marker);
-          map.setCenter(midpoint[0],midpoint[1]);
-          map.setZoom(15);
-          }).appendTo($ourPlacesList);
-        })(addMarker(placesResponse[i]));
-      }
+    } else {
+      for(var i=0; i < placesResponse.length; i++){
+        if(i < 5){
+          (function(marker) {
+          $("<li class='place'>" + "<span class='name'>" + placesResponse[i].name + "</span><br><span class='price'>Price: " + symbol(placesResponse[i].price_level, "$") + "</span><span class='rating'>Rating: " + symbol(placesResponse[i].rating, "&#9733;") + "</span></li>"
+          ).click(function(){
+            if( prev_selected ) {
+              prev_selected.info.close();
+              prev_selected.setIcon(image);
+            }
+            prev_selected = marker;
+            marker.setIcon("/assets/red_dot.png");
+            marker.info.open(map, marker);
+            // map.setCenter(midpoint[0],midpoint[1]);
+            // map.setZoom(15);
+            }).appendTo($ourPlacesList);
+          })(addMarker(placesResponse[i]));
+        }
 
-      placesResponseObjs.push({
-        name: placesResponse[i].name,
-        latitude: placesResponse[i].geometry.location.d,
-        longitude:placesResponse[i].geometry.location.e,
-        price_level:placesResponse[i].price_level,
-        rating: placesResponse[i].rating,
-        reference:placesResponse[i].reference,
-        types: placesResponse[i].types.join(",")
-      });
+        placesResponseObjs.push({
+          name: placesResponse[i].name,
+          latitude: placesResponse[i].geometry.location.d,
+          longitude:placesResponse[i].geometry.location.e,
+          price_level:placesResponse[i].price_level,
+          rating: placesResponse[i].rating,
+          reference:placesResponse[i].reference,
+          types: placesResponse[i].types.join(",")
+        });
+      }
     }
 
     // $.ajax('/maps/' + map_id + '/places', {

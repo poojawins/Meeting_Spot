@@ -24,8 +24,7 @@ body {
   color: black;
 }
 
-ul
-{
+ul {
   list-style-type: none;
 }
 
@@ -35,6 +34,13 @@ li {
 
 li.place {
   font-size: 18px;
+  height: 68px;
+  border-top: 1px dotted black;
+  padding-top: 5px;
+}
+
+li.place:first-child {
+  border: none;
 }
 
 #main {
@@ -56,11 +62,38 @@ h1 {
   color: #ea7d24;
 }
 
+#googleMap {
+  width:60%;
+  height:380px;
+  border:solid black 1px;
+  display:inline-block;
+}
+
 #googlePlaces {
   position: absolute;
   top: 0px;
   right: 0px;
   background-color: #5ec4cd;
+  width:35%;
+  min-height:380px;
+  border:solid black 1px;
+  display:inline-block;
+  margin:0 2%;
+  padding:none;
+}
+
+#googlePlaces ul {
+  padding: 0 40px;
+}
+
+.name {
+  font-weight: 900;
+}
+
+.rating {
+  padding-left: 200px;
+  position: absolute;
+  left: 3%;
 }
 
 .highlight{
