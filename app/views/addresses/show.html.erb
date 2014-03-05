@@ -1,4 +1,4 @@
-<h1><%= @address.name %>
+<h1><%= @address.name.titleize %>
 
 
 <script>
@@ -22,4 +22,4 @@ function initialize(){
 google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
-<div id="googleMap" style="width:500px;height:380px;"></div>
+<div id="googleMap" style="width:60%;height:380px;"></div>
