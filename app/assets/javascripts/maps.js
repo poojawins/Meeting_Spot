@@ -47,7 +47,7 @@ function symbol(number, symbol){
     }
     return output;
   } else {
-    return "not found";
+    return "N/A";
   }
 }
 
@@ -188,6 +188,7 @@ function findPlaces(midpoint){
   setTimeout(function(){
     var $ourPlacesList = $("#googlePlaces ul");
     $ourPlacesList.find("li").remove();
+    $("#googlePlaces").fadeIn();
     var prev_selected = false;
     if (placesResponse.length == 0){
       $("<li>Sorry, we couldn't find any results for your search. Please broaden your selections and try again.</li>").appendTo($ourPlacesList);
