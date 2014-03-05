@@ -1,0 +1,247 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+ */
+/* apply a natural box layout model to all elements */
+*, *:before, *:after {
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+ }
+
+body {
+  background-color: #707070;
+  padding: 25px 15px 10px 15px;
+  font-family: 'Lato', sans-serif;
+  font-size: 20px;
+  color: black;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  font-size: 20px;
+}
+
+li.place {
+  font-size: 18px;
+  height: 68px;
+  border-top: 1px dotted black;
+  padding-top: 5px;
+}
+
+li.place:first-child {
+  border: none;
+}
+
+#main {
+  font-size: 35px;
+  font-family: 'Lato', sans-serif;
+  color: #5ec4cd;
+}
+
+.top {
+  font-size: 24px;
+  font-family: 'Lato', sans-serif;
+  color: navy;
+  text-align: left;
+}
+
+h1 {
+  font-size: 45px;
+  font-family: 'Lato', sans-serif;
+  color: #ea7d24;
+}
+
+#googleMap {
+  width:60%;
+  height:380px;
+  border:solid black 1px;
+  display:inline-block;
+}
+
+#googlePlaces {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-color: #5ec4cd;
+  width:35%;
+  min-height:380px;
+  border:solid black 1px;
+  display:inline-block;
+  margin:0 2%;
+  padding:none;
+}
+
+#googlePlaces ul {
+  padding: 0 40px;
+}
+
+.name {
+  font-weight: 900;
+}
+
+.rating {
+  padding-left: 200px;
+  position: absolute;
+  left: 3%;
+}
+
+.highlight{
+  color: red;
+}
+
+#wrapper {
+  width: 100%;
+  height: 380px;
+  position: relative;
+}
+
+a:link {
+  color: #ffd573;
+}
+
+a:visited {
+  color: #ffd573;
+}
+
+#place-btn {
+  margin-left: 35px;
+  width: 150px;
+  height: 35px;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+}
+
+// Loader styling
+@import url(http://fonts.googleapis.com/css?family=Lato:300);
+
+
+.container{
+  text-align: center;
+  background-color: #e74c3c;
+  overflow: hidden;
+}
+
+.box:nth-child(2n-1){
+  background-color: rgba(0,0,0,0.05);
+}
+
+.box{
+  display: inline-block;
+  height: 200px;
+  width: 33.3%;
+  float:left;
+  position: relative;
+  /*margin:0 -4px -5px -2px;*/
+  transition: all .2s ease;
+}
+
+
+
+.box p{
+  color: #777;
+  font-family:  Lato,"Helvetica Neue" ;
+  font-weight: 300;
+  position: absolute;
+  font-size: 20px;
+  width: 100%;
+  height: 25px;
+  text-align: center;
+  bottom: 0px;
+  margin: 0;
+  top:0px;
+  background-color: #fff;
+  opacity: 0;
+  text-transform: uppercase;
+  transition: all .2s ease;
+}
+
+.box:hover p{
+  bottom:0px;
+  top:175px;
+  opacity: 1;
+  transition: all .2s ease;
+  z-index: 2;
+}
+
+
+
+/* MEDIA QUERIES */
+@media (max-width: 700px){
+  .box{
+    width: 50%;
+  }
+
+  .box:nth-child(2n-1){
+    background-color: inherit;
+  }
+
+  .box:nth-child(4n),.box:nth-child(4n-3) {
+    background-color: rgba(0,0,0,0.05);
+  }
+
+}
+
+@media (max-width: 420px){
+  .box{
+    width: 100%;
+  }
+
+  .box:nth-child(4n),.box:nth-child(4n-3){
+    background-color: inherit;
+  }
+
+  .box:nth-child(2n-1){
+    background-color:rgba(0,0,0,0.05);
+  }
+
+}
+
+.loader8{
+  position: relative;
+  width: 80px;
+  height: 80px;
+
+  top: 28%;
+  top: -webkit-calc(50% - 43px);
+  top: calc(50% - 43px);
+  left: 35%;
+  left: -webkit-calc(50% - 43px);
+  left: calc(50% - 43px);
+
+  border-radius: 50px;
+  background-color: rgba(255, 255, 255, .2);
+  border-width: 40px;
+  border-style: double;
+  border-color:transparent  #fff;
+
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+    box-sizing:border-box;
+
+  -webkit-transform-origin:  50% 50%;
+    transform-origin:  50% 50% ;
+  -webkit-animation: loader8 2s linear infinite;
+    animation: loader8 2s linear infinite;
+  
+}
+
+@-webkit-keyframes loader8{
+    0%{-webkit-transform:rotate(0deg);}
+    100%{-webkit-transform:rotate(360deg);}
+}
+
+@keyframes loader8{
+    0%{transform:rotate(0deg);}
+    100%{transform:rotate(360deg);}
+}

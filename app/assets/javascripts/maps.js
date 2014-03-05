@@ -38,20 +38,34 @@ function addAllMarkers(){
   }
 }
 
+
+function symbol(number, symbol){
+  if (number){
+    var output = "";
+    for (var i = 0; i < number; i++){
+      output += symbol;
+    }
+    return output;
+  } else {
+    return "not found";
+  }
+}
+
+
 function addMarker(place){
   var newMark = new google.maps.Marker({
-  	position:place.geometry.location, 
+  	position:place.geometry.location,
   	map:map,
     icon:image,
   });
   newMark.info = new google.maps.InfoWindow({
-    content:"<p>" + "<strong>" + place.name + "</strong>" + "<br />" + "Rating: " + place.rating + "<br />" + "Price: " + place.price_level + "<br />" + place.vicinity + "</p>"
+    content:"<p>" + "<strong>" + place.name + "</strong>" + "<br />" + "Rating: " + symbol(place.rating, "&#9733;") + "<br />" + "Price: " + symbol(place.price_level, "$") + "<br />" + place.vicinity + "</p>"
   });
   google.maps.event.addListener(newMark, 'click', function() {
     newMark.info.open(map, newMark);
   });
   return newMark;
-} 
+}
 
 function calcRoute(startLoc, endLoc, callback){
 
@@ -60,8 +74,8 @@ function calcRoute(startLoc, endLoc, callback){
     destination: endLoc,
     travelMode: google.maps.TravelMode.TRANSIT,
     transitOptions:{
-      departureTime: new Date(meetingDate)
-    }   
+      departureTime: meetingDate
+    }
   }
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
@@ -175,33 +189,37 @@ function findPlaces(midpoint){
     var $ourPlacesList = $("#googlePlaces ul");
     $ourPlacesList.find("li").remove();
     var prev_selected = false;
-    for(var i=0; i < placesResponse.length; i++){
-      if(i < 5){
-        (function(marker) {
-        $("<li class='place'>" + "Name: " + placesResponse[i].name + " Price: " + placesResponse[i].price_level + " Rating: " + placesResponse[i].rating + "</li>"
-        ).click(function(){
-          if( prev_selected ) {
-            prev_selected.info.close();
-            prev_selected.setIcon(image);
-          } 
-          prev_selected = marker; 
-          marker.setIcon("/assets/red_dot.png"); 
-          marker.info.open(map, marker); 
-          map.setCenter(midpoint[0],midpoint[1]);
-          map.setZoom(15);
-          }).appendTo($ourPlacesList);
-        })(addMarker(placesResponse[i]));
-      }
+    if (placesResponse.length == 0){
+      $("<li>Sorry, we couldn't find any results for your search. Please broaden your selections and try again.</li>").appendTo($ourPlacesList);
+    } else {
+      for(var i=0; i < placesResponse.length; i++){
+        if(i < 5){
+          (function(marker) {
+          $("<li class='place'>" + "<span class='name'>" + placesResponse[i].name + "</span><br><span class='price'>Price: " + symbol(placesResponse[i].price_level, "$") + "</span><span class='rating'>Rating: " + symbol(placesResponse[i].rating, "&#9733;") + "</span></li>"
+          ).click(function(){
+            if( prev_selected ) {
+              prev_selected.info.close();
+              prev_selected.setIcon(image);
+            }
+            prev_selected = marker;
+            marker.setIcon("/assets/red_dot.png");
+            marker.info.open(map, marker);
+            // map.setCenter(midpoint[0],midpoint[1]);
+            // map.setZoom(15);
+            }).appendTo($ourPlacesList);
+          })(addMarker(placesResponse[i]));
+        }
 
-      placesResponseObjs.push({
-        name: placesResponse[i].name,
-        latitude: placesResponse[i].geometry.location.d,
-        longitude:placesResponse[i].geometry.location.e,
-        price_level:placesResponse[i].price_level,
-        rating: placesResponse[i].rating,
-        reference:placesResponse[i].reference,
-        types: placesResponse[i].types.join(",")
-      });
+        placesResponseObjs.push({
+          name: placesResponse[i].name,
+          latitude: placesResponse[i].geometry.location.d,
+          longitude:placesResponse[i].geometry.location.e,
+          price_level:placesResponse[i].price_level,
+          rating: placesResponse[i].rating,
+          reference:placesResponse[i].reference,
+          types: placesResponse[i].types.join(",")
+        });
+      }
     }
     $.unblockUI();
 
@@ -223,16 +241,16 @@ function findPlaces(midpoint){
 $(document).ready(function(){
   $("#place-btn").on("click", function(){
     //If DB already don't find the routes again
-    
+
     pricePoint = $('input[name=placePrice]:radio:checked').val()
 
     $('input[name=placeType]:checked').each(function(){
         placeTypes.push($(this).val());
     }); //Value of all checked for place types
-    
+
+    //Grab value from the datetime field
     var dateTime = $("#placeDate-id").val().replace('T', ' ');
-    if (dateTime == "") meetingDate = new Date();
-    else meetingDate = new Date(dateTime);
+    meetingDate = new Date(dateTime);
 
     //AJAX request for selectionPlaces...working much better but won't work if button is clicked too fast after initial request
     // $.ajax('/maps/' + map_id + '/places', {
@@ -249,7 +267,6 @@ $(document).ready(function(){
     //   complete: function(){
     //     $('#place-btn').prop('disabled', false);
     //   }
-
     // // function(data){
     // //   selectionPlaces = $.parseJSON(data);
     // });
