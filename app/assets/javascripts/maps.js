@@ -222,6 +222,7 @@ function findPlaces(midpoint){
       }
     }
     $.unblockUI();
+    window.scrollTo(0, 0);
 
     // $.ajax('/maps/' + map_id + '/places', {
     //   type: 'POST',
