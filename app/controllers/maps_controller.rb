@@ -1,5 +1,9 @@
 class MapsController < ApplicationController
 
+  def home
+    @body_class = "home_container"
+  end
+
   def index
     @maps = Map.all
   end
@@ -15,7 +19,7 @@ class MapsController < ApplicationController
   def create
     @map = Map.new(params[:map])
     @map.coords(params[:map][:city])
-  
+
     if @map.save
       redirect_to @map
     else
@@ -30,7 +34,7 @@ class MapsController < ApplicationController
   def update
     @map = Map.find(params[:id])
     @map.coords(params[:map][:city])
-    
+
     if @map.update_attributes(params[:map])
       redirect_to @map
     else
@@ -44,4 +48,3 @@ class MapsController < ApplicationController
   end
 
 end
-

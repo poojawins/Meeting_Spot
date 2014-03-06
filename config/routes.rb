@@ -1,5 +1,7 @@
 MeetingSpot::Application.routes.draw do
 
+  root :to => 'maps#home'
+
   resources :maps do
     resources :addresses
     post '/places' => 'places#create'
