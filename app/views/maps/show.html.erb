@@ -1,4 +1,6 @@
-<h1><%= @map.map_title.titleize %></h1>
+<div class="title-bar">
+  <h2><%= @map.map_title.titleize %></h1>
+</div>
 
 <script>
   var lat = <%=  @map.middle_ground_lat %>;
@@ -10,24 +12,32 @@
   var selectionPlaces  = <%= raw @map.places.to_json %>;
 </script>
 <div id="wrapper">
-<div id="googleMap" class="centered"></div>
-<div id="googlePlaces" class="hidden"><ul></ul></div>
+  <div id="googleMap" class="centered"></div>
+  <div id="googlePlaces" class="hidden"><ul></ul></div>
 </div>
-<%= render "address_form" %>
-
+<div class="address-form">
+  <%= render "address_form" %>
+</div>
 <br>
 <div class="address_list">
+  <img src="/img/house.png">
   <ul>
+    <% if @map.addresses.length > 1 %>
+      <li class="title">Your Addresses:</li>
+    <% else %>
+      <li class="title">No Addresses Yet!</li>
+    <% end %>
     <% @map.addresses.each do |address| %>
       <% next if address.id.nil? %>
-      <li><%= address.name.capitalize %>: <%= address.place.titleize %> <%= link_to "Delete", map_address_path(address.map_id, address.id), :confirm => "Are you sure you want to delete this address?", :method => :delete %></li>
+      <li><%= address.name.capitalize %>: <%= address.place.titleize %>&nbsp;&nbsp;<%= link_to "delete", map_address_path(address.map_id, address.id), :confirm => "Are you sure you want to delete this address?", :method => :delete %></li>
     <% end %>
   </ul>
+  <img src="/img/desk.png">
 </div>
 <div class="userInput">
   <form class="placeParams">
     <fieldset>
-      <legend>Venue</legend>
+      <legend class="venue">Venue</legend>
       <p>
         <input type="checkbox" name="placeType" id="pT_1" value="bar" checked />
         <label for="pT_1">Bar</label>
@@ -45,7 +55,7 @@
 
   <form class="placeParams">
     <fieldset>
-      <legend>Time and Date</legend>
+      <legend class="time">Time and Date</legend>
       <p>
         <input type="datetime-local" name="placeDate" id="placeDate-id" step="1"/>
       </p>
@@ -54,7 +64,7 @@
 
   <form class="placeParams">
     <fieldset>
-      <legend>Maximum Price</legend>
+      <legend class="cost">Maximum Price</legend>
       <p>
         <input type="radio" name="placePrice" id="price_1" value="1" />
         <label for="pT_1">$</label>
@@ -73,13 +83,13 @@
       </p>
     </fieldset>
   </form>
+
+  <button id="place-btn">Find Meeting Place</button>
 </div>
 
-<button id="place-btn">Find Meeting Place</button>
-
 <br>
 <br>
-<%= link_to "Back to all maps", maps_path %>
+<!-- <%= link_to "Back to all maps", maps_path %> -->
 
 <script>
   //Set Default value of Date/Time based on local time
