@@ -3,4 +3,30 @@
     <br>Let us handle the rest.</p>
     <p>We'll find you a central meeting place by public transit travel time,
     <br>that fits your city and your life.</p>
+
+    <%= form_for @map do |f| %>
+      <% if @map.errors.any? %>
+        <div id="error_explanation">
+          <h2> <%= pluralize(@map.errors.count, "error") %> </h2>
+          <ul>
+            <% @map.errors.full_messages.each do |message| %>
+            <li> <%= message %> </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="field">
+        <%= f.label :name, 'Just give your map a name' %><br>
+        <%= f.text_field :name %>
+      </div>
+      <div class="field">
+        <%= f.label :city, 'And tell us what city you\'re in!' %><br>
+        <%= f.text_field :city %>
+      </div>
+      <br>
+      <div class="actions">
+        <%= f.submit 'Get Started!'%>
+      </div>
+    <% end %>
+
 </div>

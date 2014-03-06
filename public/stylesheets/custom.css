@@ -20,7 +20,7 @@
 .home_content {
   width: 75%;
   height: 400px;
-  background-color: rgba(255,255,230,0.5);
+  background-color: rgba(255,255,230,0.7);
   margin: auto;
   -webkit-border-radius: 25px;
   -moz-border-radius: 25px;
@@ -30,6 +30,17 @@
 
 .home_content p{
   text-align: center;
+}
+
+.home_content form {
+  text-align: center;
+}
+
+.home_content input {
+  font-size: 1em;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
 }
 
 body {

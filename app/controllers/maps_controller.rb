@@ -2,6 +2,7 @@ class MapsController < ApplicationController
 
   def home
     @body_class = "home_container"
+    @map = Map.new
   end
 
   def index
