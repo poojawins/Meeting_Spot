@@ -8,7 +8,7 @@ class Map < ActiveRecord::Base
   accepts_nested_attributes_for :addresses
 
   def coords(city)
-    if city == "" 
+    if city == ""
       city = "New York, NY" #default to NY
     end
     coords = Geocoder.coordinates(city)
@@ -17,7 +17,7 @@ class Map < ActiveRecord::Base
   end
 
   def map_title
-    self.name.length == 0 ? "Your Map" : self.name
+    self.name == nil || self.name.length == 0  ? "Your Map" : self.name
   end
 
   def addresses_to_json

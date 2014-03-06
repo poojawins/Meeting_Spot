@@ -6,10 +6,10 @@
     <th></th>
     <th></th>
   </tr>
-  
+
   <% @maps.each do |map| %>
     <tr class="maplist">
-      <td><%= map.name.titleize %></td>
+      <td><%= map.name %></td>
       <td></td>
       <td><%= link_to 'Show', map %></td>
       <td><%= link_to 'Edit', edit_map_path(map) %></td>
