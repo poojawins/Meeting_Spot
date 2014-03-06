@@ -232,10 +232,11 @@ a:hover {
 .userInput {
   background-color: rgba(255,255,230,0.7);
   width: 100%;
-  padding: 30px 15%;
+  padding: 30px;
   border-top: solid #D2753E 1px;
   position: absolute;
   left: 0px;
+  text-align: center;
 }
 
 .placeParams {
