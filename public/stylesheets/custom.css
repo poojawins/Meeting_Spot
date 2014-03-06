@@ -95,6 +95,7 @@ h1 {
   font-size: 45px;
   font-family: 'Lato', sans-serif;
   color: #ea7d24;
+  text-align: center;
 }
 
 #googleMap {
@@ -102,6 +103,10 @@ h1 {
   height:380px;
   border:solid black 1px;
   display:inline-block;
+}
+
+.centered {
+  margin-left: 20%;
 }
 
 #googlePlaces {

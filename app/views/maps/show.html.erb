@@ -10,7 +10,7 @@
   var selectionPlaces  = <%= raw @map.places.to_json %>;
 </script>
 <div id="wrapper">
-<div id="googleMap"></div>
+<div id="googleMap" class="centered"></div>
 <div id="googlePlaces" class="hidden"><ul></ul></div>
 </div>
 <%= render "address_form" %>

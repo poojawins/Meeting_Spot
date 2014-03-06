@@ -188,6 +188,7 @@ function findPlaces(midpoint){
   setTimeout(function(){
     var $ourPlacesList = $("#googlePlaces ul");
     $ourPlacesList.find("li").remove();
+    $("#googleMap").removeClass("centered");
     $("#googlePlaces").fadeIn();
     var prev_selected = false;
     if (placesResponse.length == 0){
