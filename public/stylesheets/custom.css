@@ -43,6 +43,14 @@
   border-radius: 10px;
 }
 
+.home_content .actions input{
+  background-color: white;
+}
+
+input:focus{
+  outline:none;
+}
+
 body {
   background-color: #707070;
   padding: 25px 15px 10px 15px;
