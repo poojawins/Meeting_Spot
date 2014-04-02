@@ -93,8 +93,8 @@ function calcRoute(startLoc, endLoc, callback){
 function midWay(routeArray){
   var longestRoute = findLongestRoute(routeArray);
   var middleOfOverviewPath = Math.floor(longestRoute.routes[0].overview_path.length / 2);
-  var midLat = longestRoute.routes[0].overview_path[middleOfOverviewPath].d;
-  var midLong = longestRoute.routes[0].overview_path[middleOfOverviewPath].e;
+  var midLat = longestRoute.routes[0].overview_path[middleOfOverviewPath].k;
+  var midLong = longestRoute.routes[0].overview_path[middleOfOverviewPath].A;
   return [midLat, midLong];
 }
 
