@@ -1,11 +1,18 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.16'
-
+ruby "2.0.0"
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+group :production, :staging do
+  gem "pg"
+end
+
+group :development, :test do
+  gem "sqlite3-ruby", "~> 1.3.0", :require => "sqlite3"
+end
+
 gem 'geocoder'
 gem 'figaro'
 
@@ -36,4 +43,4 @@ gem 'jquery-rails'
 # gem 'capistrano'
 
 # To use debugger
-gem 'debugger'
+# gem 'debugger'
