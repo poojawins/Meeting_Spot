@@ -14,3 +14,4 @@
 //= require jquery_ujs
 //= require_tree .
 //= require ./maps.js
+//= require ./jQuery.blockUI.js
