@@ -1,4 +1,5 @@
 class PlacesController < ApplicationController
+	
 	def create
 		respond_to do |format|
 			format.json { 
