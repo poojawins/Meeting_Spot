@@ -1,4 +1,5 @@
 class AddressesController < ApplicationController
+  
   def index
     @addresses = Address.all
   end
@@ -13,8 +14,6 @@ class AddressesController < ApplicationController
     @map = Map.find(params[:map_id])
     @address = Address.create(params[:map][:addresses_attributes]["0"])
     @map.addresses << @address
-
-
     # @address = Address.new(params[:address])
     # @map = params[:id]
      # if @address.save 
@@ -43,12 +42,10 @@ class AddressesController < ApplicationController
     end
   end
 
-
   def destroy
     @address = Address.find(params[:id]).delete
     @map = Map.find(params[:map_id])
     redirect_to @map
   end
-
 
 end

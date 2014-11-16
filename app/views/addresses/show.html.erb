@@ -1,20 +1,17 @@
 <h1><%= @address.name.titleize %>
 
-
 <script>
-
 function initialize(){
-	var mapProp = {
-	  center:new google.maps.LatLng(<%= @address.latitude %>, <%= @address.longitude %>),
-	  zoom:12,
-	  mapTypeId:google.maps.MapTypeId.ROADMAP
-	};
-	var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-	var marker = new google.maps.Marker({
-  	position:mapProp.center,
- 	});
-
-	marker.setMap(map);
+    var mapProp = {
+        center:new google.maps.LatLng(<%= @address.latitude %>, <%= @address.longitude %>),
+        zoom:12,
+        mapTypeId:google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+    var marker = new google.maps.Marker({
+        position:mapProp.center,
+    });
+    marker.setMap(map);
 }
 
 // var myCenter=new google.maps.LatLng(<%= @address.latitude %>, <%= @address.longitude %>);

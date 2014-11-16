@@ -33,5 +33,4 @@ class Map < ActiveRecord::Base
     addy_array
   end
 
-
 end

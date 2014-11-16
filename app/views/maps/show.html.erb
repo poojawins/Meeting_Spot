@@ -3,14 +3,15 @@
 </div>
 
 <script>
-  var lat = <%=  @map.middle_ground_lat %>;
-  var lon = <%= @map.middle_ground_long %>;
-  var bounds = new google.maps.LatLngBounds();
-  var addressArray = convertToLatLonObjects(<%= @map.address_array %>);
-  var markers = <%= raw @map.addresses_to_json %>;
-  var map_id = <%= @map.id %>;
-  var selectionPlaces  = <%= raw @map.places.to_json %>;
+    var lat = <%=  @map.middle_ground_lat %>;
+    var lon = <%= @map.middle_ground_long %>;
+    var bounds = new google.maps.LatLngBounds();
+    var addressArray = convertToLatLonObjects(<%= @map.address_array %>);
+    var markers = <%= raw @map.addresses_to_json %>;
+    var map_id = <%= @map.id %>;
+    var selectionPlaces  = <%= raw @map.places.to_json %>;
 </script>
+
 <div id="wrapper">
   <div id="googleMap" class="centered"></div>
   <div id="googlePlaces" class="hidden"><ul></ul></div>
@@ -93,18 +94,19 @@
 
 <script>
   //Set Default value of Date/Time based on local time
-  Date.prototype.toDateInputValue = (function() {
+Date.prototype.toDateInputValue = (function() {
     var local = new Date(this);
     local.setMinutes(this.getMinutes() - this.getTimezoneOffset()); // accounts for timezone differences
     return local.toJSON();
-  });
-  var d = new Date();
-  $('#placeDate-id').val(d.toDateInputValue().slice(0,-1));
+});
 
-  google.maps.event.addDomListener(window, "load", initialize);
-  google.maps.event.addDomListener(window, "load", addAllMarkers);
+var d = new Date();
+$('#placeDate-id').val(d.toDateInputValue().slice(0,-1));
 
-  $(document).ready(function() {
+google.maps.event.addDomListener(window, "load", initialize);
+google.maps.event.addDomListener(window, "load", addAllMarkers);
+
+$(document).ready(function() {
     $('#place-btn').click(function() {
         $.blockUI({ message: "<div class='loader8'></div>",css: {
             border: 'none',
@@ -115,7 +117,6 @@
             opacity: .5,
             color: '#fff'
         } });
-
         // setTimeout($.unblockUI, 2000);
     });
 });
